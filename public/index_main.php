@@ -7,28 +7,48 @@ require_once __DIR__ . '/components/navbar.php';
 
 <div class="container">
     <div class="card text-center">
-        <form onsubmit="alert('enviando form!');" method="POST">
+        <form onsubmit="alert(JSON.stringify(this));" method="POST">
+            <input type="hidden" id="operacao" value="buscar_instituicoes_com_filtro">
             <div class="card-header">
-                <ul class="nav nav-tabs card-header-tabs">
-                    <input type="hidden" id="tipo" value="escola">
+                <nav>
+                    <ul class="nav nav-tabs card-header-tabs" role="tablist">
+                        <img src="assets/imgs/faculdade.jpg" class="card-img-top mb-3" alt="..." height="240">
 
-                    <img src="assets/imgs/faculdade.jpg" class="card-img-top mb-3" alt="..." height="240">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="true" href="#">Escolas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Faculdade</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Idiomas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Profissionalizante</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Outros</a>
-                    </li>
-                </ul>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#" id="nav-escola-tab" data-bs-toggle="tab" data-bs-target="#nav-escola" type="button" role="tab" aria-controls="nav-escola" aria-selected="true">Escolas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="nav-faculdade-tab" data-bs-toggle="tab" data-bs-target="#nav-faculdade" type="button" role="tab" aria-controls="nav-faculdade" aria-selected="true">Faculdades</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="nav-idiomas-tab" data-bs-toggle="tab" data-bs-target="#nav-idiomas" type="button" role="tab" aria-controls="nav-idiomas" aria-selected="true">Idiomas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="nav-profissionalizante-tab" data-bs-toggle="tab" data-bs-target="#nav-profissionalizante" type="button" role="tab" aria-controls="nav-profissionalizante" aria-selected="true">Profissionalizantes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="nav-outros-tab" data-bs-toggle="tab" data-bs-target="#nav-outros" type="button" role="tab" aria-controls="nav-outros" aria-selected="true">Outros</a>
+                        </li>
+                    </ul>
+                </nav>
+
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-escola" role="tabpanel" aria-labelledby="nav-escola-tab" tabindex="0">
+                        <input type="hidden" id="tipo" value="escola">
+                    </div>
+                    <div class="tab-pane fade" id="nav-faculdade" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
+                        <input type="hidden" id="tipo" value="faculdade">
+                    </div>
+                    <div class="tab-pane fade" id="nav-idiomas" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
+                        <input type="hidden" id="tipo" value="idiomas">
+                    </div>
+                    <div class="tab-pane fade" id="nav-profissionalizante" role="tabpanel" aria-labelledby="nav-profissionalizante-tab" tabindex="0">
+                        <input type="hidden" id="tipo" value="profissionalizante">
+                    </div>
+                    <div class="tab-pane fade" id="nav-outros" role="tabpanel" aria-labelledby="nav-outros-tab" tabindex="0">
+                        <input type="hidden" id="tipo" value="outros">
+                    </div>
+                </div>
             </div>
 
             <div class="card-body">
