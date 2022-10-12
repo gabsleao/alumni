@@ -1,4 +1,4 @@
-<nav class="bg-light shadow-sm mb-5 rounded">
+<nav class="bg-light shadow-sm mb-3 rounded">
     <div class="row">
         <div class="col-11 mt-2 mb-2">
             <a class="navbar-brand ms-3" href="index.php">

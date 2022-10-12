@@ -2,6 +2,7 @@
 require_once __DIR__ . '/config/config.php';
 
 require_once __DIR__ . '/components/navbar.php';
+require_once __DIR__ . '/components/toast_notAllowed.php';
 
 ?>
 
@@ -90,4 +91,7 @@ require_once __DIR__ . '/components/navbar.php';
             </div>
         </form>
     </div>
+    <?php
+        require_once __DIR__ . "/instituicoes_destaque.php";
+    ?>
 </div>
