@@ -33,7 +33,7 @@ $Logado = isset($_SESSION["Session"]) ? true : false;
                     </li>
                     <?php if (!$Logado) { ?>
                         <li><button class="dropdown-item" type="button"><img src="assets/icons/sign_in.svg" width="20" height="20"> Entrar com uma conta</button></li>
-                        <li><button class="dropdown-item" type="button"><img src="assets/icons/sign_up.svg" width="20" height="20"> Registrar</button></li>
+                        <li><button class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#modalRegistrar"><img src="assets/icons/sign_up.svg" width="20" height="20"> Registrar</button></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
