@@ -1,3 +1,6 @@
+<?php
+require_once __DIR__ . '/load.php';
+?>
 <div class="modal fade" id="modalRegistrar" tabindex="-1" aria-labelledby="modalRegistrar" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

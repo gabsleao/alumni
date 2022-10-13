@@ -142,19 +142,49 @@ function registrarUsuario(Data) {
     type: "POST",
     url: "./public/controllers/endpoint.php",
     data: PostData,
+    beforeSend: function () {
+      setTimeout(function () {
+        showToast("toastOperacaoConcluida", document);
+      }, 300)
+    },
     success: function (response) {
       console.log('success');
-      showToast("toastOperacaoConcluida");
     },
     error: function (response) {
       console.log('error');
-      showToast("toastWhoops");
     }
   });
 }
 
+function logarUsuario(Data) {
+  var PostData = {
+    "email": Data.email.value,
+    "senha": Data.senha.value,
+    "operacao": "logar_usuario",
+    "controller": "UserController",
+  };
+
+  $.ajax({
+    type: "POST",
+    url: "./public/controllers/endpoint.php",
+    data: PostData,
+    beforeSend: function () {
+      setTimeout(function () {
+        showToast("toastOperacaoConcluida");
+      }, 300)
+    },
+    success: function (response) {
+      console.log('success');
+    },
+    error: function (response) {
+      console.log('error');
+    }
+  });
+}
+
+
 function showToast(type) {
-  console.log("entrando no showtoast");
+  console.log(document);
   var toastDocument = document.getElementById(type);//select id of toast
   var toast = new bootstrap.Toast(toastDocument);//inizialize it
   toast.show();//show it
