@@ -10,8 +10,6 @@ class User {
     }
 
     public function criar(UserController $Data){
-        Log::doLog(var_export($Data, 1), "user");
-        return;
         $Sql = "INSERT INTO " . $this->Tabela . "(nome, email, senha, localizacao, data_criado, tipo, esta_deletado, informacoes)
                 VALUES (:nome, :email, :senha, :localizacao, :data_criado, :tipo, :esta_deletado, :informacoes)";
         $Statement = $this->Database->prepare($Sql);
