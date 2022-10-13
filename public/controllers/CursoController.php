@@ -53,7 +53,7 @@ class CursoController extends AbstractController {
     }
 
     public function get(){
-        $this->Modal->get();
+        $this->Modal->get($this->idcurso);
     }
 
     public function getAll(){

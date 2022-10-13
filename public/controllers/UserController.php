@@ -65,7 +65,7 @@ class UserController extends AbstractController {
     }
 
     public function get(){
-        $this->Modal->get();
+        $this->Modal->get($this->iduser);
     }
 
     public function getAll(){

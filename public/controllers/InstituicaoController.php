@@ -54,7 +54,7 @@ class InstituicaoController extends AbstractController {
     }
 
     public function get(){
-        return $this->Modal->get();
+        return $this->Modal->get($this->idinstituicao);
     }
 
     public function getAll(){
