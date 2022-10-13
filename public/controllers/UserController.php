@@ -41,6 +41,10 @@ class UserController extends AbstractController {
         if(!isset($this->informacoes) || !is_array($this->informacoes)){
             return;
         }
+        
+        if(isset($this->informacoes["profile_img_filename"]) && strlen($this->informacoes["profile_img_filename"]) > 0){
+            $this->informacoes["profile_img_filename"] = basename(str_replace( "\\", '/', $this->informacoes["profile_img_filename"]));
+        }
 
         $Seguranca = new Seguranca();
 
@@ -62,6 +66,10 @@ class UserController extends AbstractController {
 
     public function get(){
         $this->Modal->get();
+    }
+
+    public function getAll(){
+        $this->Modal->getAll();
     }
 
     public function getProfileImageSrc(){

@@ -55,4 +55,8 @@ class CursoController extends AbstractController {
     public function get(){
         $this->Modal->get();
     }
+
+    public function getAll(){
+        $this->Modal->getAll();
+    }
 }

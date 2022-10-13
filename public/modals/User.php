@@ -37,6 +37,18 @@ class User {
     public function get(){
         $Resultado = [];
 
+        $Sql = "SELECT * FROM " . $this->Tabela . " WHERE esta_deletado = 0 AND iduser = :iduser";
+        $Statement = $this->Database->prepare($Sql);
+        $Statement->bindValue(":iduser", $this->iduser);
+        $Statement->execute();
+		$Resultado = $Statement->fetch(PDO::FETCH_ASSOC);
+
+        return json_encode(["Sucesso" => true, "Resposta" => $Resultado]);
+    }
+
+    public function getAll(){
+        $Resultado = [];
+
         $Sql = "SELECT * FROM " . $this->Tabela . " WHERE esta_deletado = 0";
         $Statement = $this->Database->prepare($Sql);
         $Statement->execute();

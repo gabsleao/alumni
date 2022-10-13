@@ -36,6 +36,20 @@ class Instituicao {
     }
 
     public function get(){
+        $Sql = "SELECT * FROM " . $this->Tabela . " WHERE esta_deletado = 0 AND idinstituicao = :idinstituicao";
+        $Statement = $this->Database->prepare($Sql);
+        $Statement->bindValue(":idinstituicao", $this->nome);
+        $Executado = $Statement->execute();
+		$Resultado = $Statement->fetch(PDO::FETCH_ASSOC);
+
+        if(!$Resultado){
+            $Resultado = [];
+        }
+        
+        return json_encode(["Sucesso" => $Executado, "Resposta" => $Resultado]);
+    }
+
+    public function getAll(){
         $Sql = "SELECT * FROM " . $this->Tabela . " WHERE esta_deletado = 0";
         $Statement = $this->Database->prepare($Sql);
         $Executado = $Statement->execute();

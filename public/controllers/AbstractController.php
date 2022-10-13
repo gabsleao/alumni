@@ -27,4 +27,8 @@ class AbstractController {
     public function get(){
         return $this->Controller->get();
     }
+
+    public function getAll(){
+        return $this->Controller->getAll();
+    }
 }
