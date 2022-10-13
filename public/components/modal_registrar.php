@@ -161,7 +161,6 @@
                 var reader = new FileReader();
 
                 reader.onload = function(e) {
-                    console.log(URL.createObjectURL(input.files[0]));
                     $('#preview-profile_img_filename').attr('src', e.target.result);
                 }
                 reader.readAsDataURL(input.files[0]);
