@@ -14,7 +14,8 @@ switch ($_POST["operacao"]) {
         $AbstractController->Controller->senha = $_POST["senha"];
         $AbstractController->Controller->tipo = $_POST["tipo"];
         $AbstractController->Controller->localizacao = '';
-        $AbstractController->Controller->informacoes["profile_img_filename"] = $_POST["profile_img_filename"];
+        $AbstractController->Controller->informacoes["profile_img_filename"] = $_POST["profile_img_filename"] ?? null;
+        $AbstractController->Controller->informacoes["profile_img_url"] = $_POST["profile_img_url"] ?? null;
         $AbstractController->Controller->informacoes["cidade"] = $_POST["cidade"];
         $AbstractController->Controller->informacoes["estado"] = $_POST["estado"];
         

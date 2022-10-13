@@ -8,7 +8,7 @@
             <div class="modal-body">
                 <form class="row g-3 needs-validation" novalidate onsubmit="registrarUsuario(this);">
                     <input type="hidden" id="tipo" value="USER">
-                    <div class="col-md-9 align-self-end">
+                    <div class="col-md-12 align-self-end">
                         <label for="nome" class="form-label">Nome</label>
                         <input type="text" class="form-control" id="nome" required minlength="3" maxlength="50">
                         <div class="valid-feedback">
@@ -18,10 +18,11 @@
                             Seu nome precisa ter entre 3 e 50 caracteres.
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <!-- <div class="col-md-3">
                         <label for="profile_img_filename" class="form-label">
                             <img src="assets/icons/user_focus.svg" class="rounded-circle" style="cursor: pointer;" width="80" height="80" id="preview-profile_img_filename" />
                         </label>
+                        <input type="hidden" class="form-control" id="profile_img_url">
                         <input type="file" class="form-control" id="profile_img_filename" accept="image/*" style="display: none;">
                         <div class="valid-feedback">
                             Excelente!
@@ -29,7 +30,7 @@
                         <div class="invalid-feedback">
                             Utilize uma imagem válida.
                         </div>
-                    </div>
+                    </div> -->
                     <div class="col-md-6">
                         <label for="email" class="form-label">Email</label>
                         <input type="email" class="form-control" id="email" placeholder="...@dominio.com" required minlength="3" maxlength="50">
@@ -152,19 +153,20 @@
 
     //preview imagem de perfil
     //https://developer.mozilla.org/en-US/docs/Web/API/File_API/Using_files_from_web_applications
-    $(function() {
-        $('#profile_img_filename').change(function() {
-            var input = this;
-            var url = $(this).val();
-            var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
+    // $(function() {
+    //     $('#profile_img_filename').change(function() {
+    //         var input = this;
+    //         var url = $(this).val();
+    //         var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
+    //         if (input.files && input.files[0]) {
+    //             var reader = new FileReader();
 
-                reader.onload = function(e) {
-                    $('#preview-profile_img_filename').attr('src', e.target.result);
-                }
-                reader.readAsDataURL(input.files[0]);
-            }
-        });
-    });
+    //             reader.onload = function(e) {
+    //                 $('#preview-profile_img_filename').attr('src', e.target.result);
+    //                 $('#profile_img_url').attr('value', URL.createObjectURL(input.files[0]));
+    //             }
+    //             reader.readAsDataURL(input.files[0]);
+    //         }
+    //     });
+    // });
 </script>

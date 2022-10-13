@@ -2,15 +2,15 @@
 
 class InstituicaoController extends AbstractController {
 
-    public Int $idinstituicao;
-    public String $nome;
-    public Int $localizacao;
-    public Int $data_criado;
-    public Int $data_modificado;
-    public Int $iduser_criador;
-    public String $tipo;
-    public Int $esta_deletado;
-    public Array $informacoes;
+    public Int $idinstituicao = 0;
+    public String $nome = "";
+    public String $localizacao = "";
+    public Int $data_criado = 0;
+    public Int $data_modificado = 0;
+    public Int $iduser_criador = 0;
+    public String $tipo = "";
+    public Int $esta_deletado = 0;
+    public Array $informacoes = [];
 
     private Instituicao $Modal;
 

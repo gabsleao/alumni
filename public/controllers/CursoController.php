@@ -2,15 +2,15 @@
 
 class CursoController extends AbstractController {
 
-    public Int $idcurso;
-    public String $nome;
-    public Int $data_criado;
-    public String $descricao;
-    public Int $idinstituicao;
-    public String $esta_deletado;
-    public Array $informacoes;
-    public Int $iduser_criador;
-    public Int $data_modificado;
+    public Int $idcurso = 0;
+    public String $nome = "";
+    public Int $data_criado = 0;
+    public String $descricao = "";
+    public Int $idinstituicao = 0;
+    public Int $esta_deletado = 0;
+    public Array $informacoes = [];
+    public Int $iduser_criador = 0;
+    public Int $data_modificado =  0;
     private Curso $Modal;
 
     public function __construct(){

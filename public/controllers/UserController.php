@@ -2,16 +2,16 @@
 
 class UserController extends AbstractController {
 
-    public Int $iduser;
-    public String $nome;
-    public String $email;
-    public String $senha;
-    public String $localizacao;
-    public Int $data_criado;
-    public Int $data_modificado;
-    public String $tipo;
-    public String $esta_deletado;
-    public Array $informacoes;
+    public Int $iduser = 0;
+    public String $nome = "";
+    public String $email = "";
+    public String $senha = "";
+    public String $localizacao = "";
+    public Int $data_criado = 0;
+    public Int $data_modificado = 0;
+    public String $tipo = "";
+    public Int $esta_deletado = 0;
+    public Array $informacoes = [];
     
     private User $Modal;
 
@@ -44,12 +44,15 @@ class UserController extends AbstractController {
         
         if(isset($this->informacoes["profile_img_filename"]) && strlen($this->informacoes["profile_img_filename"]) > 0){
             $this->informacoes["profile_img_filename"] = basename(str_replace( "\\", '/', $this->informacoes["profile_img_filename"]));
+            if(isset($this->informacoes["profile_img_url"]) && strlen($this->informacoes["profile_img_url"]) > 0){
+                $this->uploadProfileImage();
+            }
         }
 
         $Seguranca = new Seguranca();
-
         $this->email = $Seguranca->encryptString($this->email);
         $this->senha = $Seguranca->encryptString($this->senha);
+
         $this->data_criado = time();
         $this->esta_deletado = 0;
         
@@ -89,5 +92,20 @@ class UserController extends AbstractController {
         }
 
         return $DefaultImageIcon;
+    }
+
+    public function uploadProfileImage(){
+        $TargetFile = $this->UserFolder . $this->informacoes["profile_img_filename"];
+        
+        // Check if file already exists
+        if (file_exists($TargetFile)) {
+            Log::doLog("Arquivo já existe: " . var_export($TargetFile, 1), "uploadProfileImage_error");
+        }
+
+        if (move_uploaded_file($this->informacoes["profile_img_url"], $TargetFile)) {
+            Log::doLog("Arquivo " . $this->informacoes["profile_img_filename"] . " [ " . $this->informacoes["profile_img_url"] . "] uploaded!", "uploadProfileImage");
+        } else {
+            Log::doLog("Arquivo " . $this->informacoes["profile_img_filename"] . " [ " . $this->informacoes["profile_img_url"] . "] não completou o upload em: " . $TargetFile, "uploadProfileImage_error");
+        }
     }
 }

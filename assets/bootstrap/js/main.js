@@ -125,7 +125,8 @@ function notAllowed(document, like_id) {
 function registrarUsuario(Data) {
   var PostData = {
     "nome": Data.nome.value,
-    "profile_img_filename": Data.profile_img_filename.value,
+    // "profile_img_url" : Data.profile_img_url.value,
+    // "profile_img_filename": Data.profile_img_filename.value,
     "email": Data.email.value,
     "confirmar_email": Data.confirmar_email.value,
     "senha": Data.senha.value,
