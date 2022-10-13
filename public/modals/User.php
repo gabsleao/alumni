@@ -10,6 +10,8 @@ class User {
     }
 
     public function criar(UserController $Data){
+        Log::doLog(var_export($Data, 1), "user");
+        return;
         $Sql = "INSERT INTO " . $this->Tabela . "(nome, email, senha, localizacao, data_criado, tipo, esta_deletado, informacoes)
                 VALUES (:nome, :email, :senha, :localizacao, :data_criado, :tipo, :esta_deletado, :informacoes)";
         $Statement = $this->Database->prepare($Sql);
@@ -34,12 +36,12 @@ class User {
         return json_encode(["Sucesso" => true, "Resposta" => "Operação para excluir curso ainda a ser implementada"]);
     }
 
-    public function get(){
+    public function get($IDUser){
         $Resultado = [];
 
         $Sql = "SELECT * FROM " . $this->Tabela . " WHERE esta_deletado = 0 AND iduser = :iduser";
         $Statement = $this->Database->prepare($Sql);
-        $Statement->bindValue(":iduser", $this->iduser);
+        $Statement->bindValue(":iduser", $IDUser);
         $Statement->execute();
 		$Resultado = $Statement->fetch(PDO::FETCH_ASSOC);
 

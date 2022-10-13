@@ -34,12 +34,12 @@ class Curso {
         return json_encode(["Sucesso" => true, "Resposta" => "Operação para excluir curso ainda a ser implementada"]);
     }
 
-    public function get(){
+    public function get($IDCurso){
         $Resultado = [];
 
         $Sql = "SELECT * FROM " . $this->Tabela . " WHERE esta_deletado = 0 AND idcurso = :idcurso";
         $Statement = $this->Database->prepare($Sql);
-        $Statement->bindValue(":idcurso", $this->idcurso);
+        $Statement->bindValue(":idcurso", $IDCurso);
         $Statement->execute();
 		$Resultado = $Statement->fetch(PDO::FETCH_ASSOC);
 

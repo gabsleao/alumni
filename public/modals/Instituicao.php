@@ -35,10 +35,10 @@ class Instituicao {
         return json_encode(["Sucesso" => true, "Resposta" => "Operação para excluir instituição ainda a ser implementada"]);
     }
 
-    public function get(){
+    public function get($IDInstituicao){
         $Sql = "SELECT * FROM " . $this->Tabela . " WHERE esta_deletado = 0 AND idinstituicao = :idinstituicao";
         $Statement = $this->Database->prepare($Sql);
-        $Statement->bindValue(":idinstituicao", $this->nome);
+        $Statement->bindValue(":idinstituicao", $IDInstituicao);
         $Executado = $Statement->execute();
 		$Resultado = $Statement->fetch(PDO::FETCH_ASSOC);
 
