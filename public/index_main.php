@@ -3,6 +3,8 @@ require_once __DIR__ . '/config/config.php';
 
 require_once __DIR__ . '/components/navbar.php';
 require_once __DIR__ . '/components/toast_notAllowed.php';
+require_once __DIR__ . '/components/toast_whoops.php';
+require_once __DIR__ . '/components/toast_operacaoConcluida.php';
 require_once __DIR__ . '/components/modal_registrar.php';
 
 ?>

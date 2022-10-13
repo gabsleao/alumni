@@ -13,8 +13,8 @@ var shake = function (element, magnitude = 16, angular = false) {
   //Capture the element's position and angle so you can
   //restore them after the shaking has finished
   var startX = 0,
-      startY = 0,
-      startAngle = 0;
+    startY = 0,
+    startAngle = 0;
 
   // Divide the magnitude into 10 units so that you can 
   // reduce the amount of shake by 10 percent each frame
@@ -27,7 +27,7 @@ var shake = function (element, magnitude = 16, angular = false) {
 
   //Add the element to the `shakingElements` array if it
   //isn't already there
-  if(shakingElements.indexOf(element) === -1) {
+  if (shakingElements.indexOf(element) === -1) {
     //console.log("added")
     shakingElements.push(element);
 
@@ -35,7 +35,7 @@ var shake = function (element, magnitude = 16, angular = false) {
     //The `updateShake` method will be called each frame
     //in the game loop. The shake effect type can be either
     //up and down (x/y shaking) or angular (rotational shaking).
-    if(angular) {
+    if (angular) {
       angularShake();
     } else {
       upAndDownShake();
@@ -110,14 +110,51 @@ var shake = function (element, magnitude = 16, angular = false) {
 
 };
 
-function like($Data){
-    alert("LIKADO!");
+function like(Data) {
+  alert("LIKADO!");
 }
 
-function notAllowed(document, like_id){
-    shake(document.getElementById("like_id-" + like_id));
+function notAllowed(document, like_id) {
+  shake(document.getElementById("like_id-" + like_id));
 
-    var toastNotAllowedElement = document.getElementById('toastNotAllowed');//select id of toast
-    var toastNotAllowed = new bootstrap.Toast(toastNotAllowedElement);//inizialize it
-    toastNotAllowed.show();//show it
+  var toastDocument = document.getElementById('toastNotAllowed');//select id of toast
+  var toast = new bootstrap.Toast(toastDocument);//inizialize it
+  toast.show();//show it
+}
+
+function registrarUsuario(Data) {
+  var PostData = {
+    "nome": Data.nome.value,
+    "profile_img_filename": Data.profile_img_filename.value,
+    "email": Data.email.value,
+    "confirmar_email": Data.confirmar_email.value,
+    "senha": Data.senha.value,
+    "confirmar_senha": Data.confirmar_senha.value,
+    "estado": Data.estado.value,
+    "cidade": Data.cidade.value,
+    "tipo": Data.tipo.value,
+    "operacao": "registrar_usuario",
+    "controller": "UserController",
+  };
+
+  $.ajax({
+    type: "POST",
+    url: "./public/controllers/endpoint.php",
+    data: PostData,
+    success: function (response) {
+      console.log('success');
+      showToast("toastOperacaoConcluida");
+    },
+    error: function (response) {
+      console.log('error');
+      showToast("toastWhoops");
+    }
+  });
+}
+
+function showToast(type) {
+  console.log("entrando no showtoast");
+  var toastDocument = document.getElementById(type);//select id of toast
+  var toast = new bootstrap.Toast(toastDocument);//inizialize it
+  toast.show();//show it
 }

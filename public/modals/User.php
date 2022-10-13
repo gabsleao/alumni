@@ -10,19 +10,17 @@ class User {
     }
 
     public function criar(UserController $Data){
-        $Sql = "INSERT INTO " . $this->Tabela . "(nome, email, senha, data_criado, descricao, idinstituicao, esta_deletado, informacoes, iduser_criador, data_modificado)
-                VALUES (:nome, :data_criado, :descricao, :idinstituicao, :esta_deletado, :informacoes, :iduser_criador, :data_modificado)";
+        $Sql = "INSERT INTO " . $this->Tabela . "(nome, email, senha, localizacao, data_criado, tipo, esta_deletado, informacoes)
+                VALUES (:nome, :email, :senha, :localizacao, :data_criado, :tipo, :esta_deletado, :informacoes)";
         $Statement = $this->Database->prepare($Sql);
         $Statement->bindValue(":nome", $Data->nome);
         $Statement->bindValue(":email", $Data->email);
         $Statement->bindValue(":senha", $Data->senha);
+		$Statement->bindValue(":localizacao", $Data->localizacao);
 		$Statement->bindValue(":data_criado", $Data->data_criado);
-		$Statement->bindValue(":descricao", $Data->descricao);
-        $Statement->bindValue(":idinstituicao", $Data->idinstituicao);
+        $Statement->bindValue(":tipo", $Data->tipo);
 		$Statement->bindValue(":esta_deletado", $Data->esta_deletado);
-		$Statement->bindValue(":informacoes", $Data->informacoes);
-        $Statement->bindValue(":iduser_criador", $Data->iduser_criador);
-		$Statement->bindValue(":data_modificado", $Data->data_modificado);
+        $Statement->bindValue(":informacoes", json_encode($Data->informacoes));
         $Statement->execute();
 
         return json_encode(["Sucesso" => true, "Resposta" => "Operação para salvar curso enviada com sucesso!"]);

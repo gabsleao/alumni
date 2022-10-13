@@ -34,10 +34,6 @@ class UserController extends AbstractController {
             return;
         }
 
-        if(!isset($this->localizacao) || strlen($this->localizacao) == 0){
-            return;
-        }
-
         if(!isset($this->tipo) || strlen($this->tipo) == 0){
             return;
         }
@@ -48,19 +44,11 @@ class UserController extends AbstractController {
 
         $Seguranca = new Seguranca();
 
-        Log::doLog('Antes: ' .$this->email, 'criarUser_emailEncrypt');
         $this->email = $Seguranca->encryptString($this->email);
-        Log::doLog('Depois (encryptado): ' . $this->email, 'criarUser_emailEncrypt');
-        Log::doLog('DECRYPTADO: ' . $Seguranca->decryptString($this->email), 'criarUser_emailEncrypt');
-
-        Log::doLog('Antes: ' .$this->senha, 'criarUser_senhaEncrypt');
         $this->senha = $Seguranca->encryptString($this->senha);
-        Log::doLog('Depois (encryptado): ' . $this->senha, 'criarUser_senhaEncrypt');
-        Log::doLog('DECRYPTADO: ' . $Seguranca->decryptString($this->senha), 'criarUser_senhaEncrypt');
-
         $this->data_criado = time();
         $this->esta_deletado = 0;
-        return;
+        
         $this->Modal->criar($this);
     }
 

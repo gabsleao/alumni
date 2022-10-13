@@ -2,7 +2,7 @@
 
 class AbstractController {
 
-    private $Controller;
+    public $Controller;
 
     public function __construct($Controller = null){
         if(is_null($Controller)){

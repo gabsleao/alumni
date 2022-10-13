@@ -15,7 +15,7 @@ spl_autoload_register(function ($Classe) {
         if (is_readable($Path)) {
             require_once($Path);
         } else {
-            $Path = __DIR__ . DIRECTORY_SEPARATOR . '../../utils/' . $Classe . '.php';
+            $Path = __DIR__ . DIRECTORY_SEPARATOR . '../utils/' . $Classe . '.php';
             //Utils
             if (is_readable($Path)) {
                 require_once($Path);
