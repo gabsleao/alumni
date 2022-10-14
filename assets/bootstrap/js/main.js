@@ -143,9 +143,7 @@ function registrarUsuario(Data) {
     url: "./public/controllers/endpoint.php",
     data: PostData,
     beforeSend: function () {
-      setTimeout(function () {
-        showToast("toastOperacaoConcluida", document);
-      }, 300)
+      showToast("toastOperacaoConcluida");
     },
     success: function (response) {
       console.log('success');
@@ -169,9 +167,7 @@ function logarUsuario(Data) {
     url: "./public/controllers/endpoint.php",
     data: PostData,
     beforeSend: function () {
-      setTimeout(function () {
-        showToast("toastOperacaoConcluida");
-      }, 300)
+      showToast("toastOperacaoConcluida");
     },
     success: function (response) {
       console.log('success');
@@ -185,7 +181,7 @@ function logarUsuario(Data) {
 
 function showToast(type) {
   console.log(document);
-  var toastDocument = document.getElementById(type);//select id of toast
-  var toast = new bootstrap.Toast(toastDocument);//inizialize it
-  toast.show();//show it
+  var toastElement = document.getElementById(type);
+  var toast = new bootstrap.Toast(toastElement);
+  toast.show();
 }

@@ -9,7 +9,7 @@ require_once __DIR__ . '/load.php';
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form class="row g-3 needs-validation" novalidate onsubmit="logarUsuario(this, document);">
+                <form class="row g-3 needs-validation" novalidate onsubmit="logarUsuario(this);">
                     <div class="col-md-12 align-self-end">
                         <label for="email" class="form-label">Email</label>
                         <input type="text" class="form-control" id="email" required minlength="3" maxlength="50">
@@ -32,7 +32,7 @@ require_once __DIR__ . '/load.php';
                     </div>
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Criar</button>
+                <button type="submit" class="btn btn-primary">Entrar</button>
             </div>
             </form>
         </div>

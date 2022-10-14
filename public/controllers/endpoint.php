@@ -5,6 +5,7 @@ if (!isset($_POST['operacao']) || !isset($_POST['controller'])) {
     throw new Exception("Operação inválida.");
 }
 
+Log::doLog(var_export($_POST, 1), "endpoing", 1);
 $AbstractController = new AbstractController($_POST["controller"]);
 
 switch ($_POST["operacao"]) {
