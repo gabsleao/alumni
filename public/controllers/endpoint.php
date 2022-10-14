@@ -5,7 +5,6 @@ if (!isset($_POST['operacao']) || !isset($_POST['controller'])) {
     throw new Exception("Operação inválida.");
 }
 
-Log::doLog(var_export($_POST, 1), "endpoing", 1);
 $AbstractController = new AbstractController($_POST["controller"]);
 
 switch ($_POST["operacao"]) {
@@ -21,6 +20,13 @@ switch ($_POST["operacao"]) {
         $AbstractController->Controller->informacoes["estado"] = $_POST["estado"];
         
         $AbstractController->Controller->criar();
+        break;
+
+    case "logar_usuario":
+        $AbstractController->Controller->email = $_POST["email"];
+        $AbstractController->Controller->senha = $_POST["senha"];
+
+        $AbstractController->Controller->logarUsuario();
         break;
 
     default:

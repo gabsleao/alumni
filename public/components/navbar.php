@@ -2,6 +2,7 @@
 $UserIcon = isset($_SESSION["Session"]) ? $_SESSION["Session"]->Usuario->getProfileImageSrc() : "assets/icons/guest_caret_down.svg";
 $Username = isset($_SESSION["Session"]) ? $_SESSION["Session"]->Usuario->getUsername() : "visitante";
 $Logado = isset($_SESSION["Session"]) ? true : false;
+var_dump($_SESSION);
 
 ?>
 

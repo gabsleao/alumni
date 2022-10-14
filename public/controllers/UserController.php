@@ -49,9 +49,8 @@ class UserController extends AbstractController {
             }
         }
 
-        $Seguranca = new Seguranca();
-        $this->email = $Seguranca->encryptString($this->email);
-        $this->senha = $Seguranca->encryptString($this->senha);
+        $this->email = Seguranca::encryptString($this->email);
+        $this->senha = Seguranca::encryptString($this->senha);
 
         $this->data_criado = time();
         $this->esta_deletado = 0;
@@ -73,6 +72,26 @@ class UserController extends AbstractController {
 
     public function getAll(){
         $this->Modal->getAll();
+    }
+
+    public function getPorEmail(){
+        $EmailEncryptado = Seguranca::encryptString($this->email);
+        $UsuarioArray = $this->Modal->getPorEmail($EmailEncryptado);
+
+        if(!is_array($UsuarioArray)){
+            Log::doLog("UsuarioArray: " . var_export($UsuarioArray, 1), "getPorEmail_error");
+            throw new Exception("Usuario não encontrado.");
+        }
+
+        foreach($UsuarioArray as $Atributo => $Valor){
+            if(isset($this->$Atributo)){
+                if($Atributo == "informacoes"){
+                    $Valor = json_decode($Valor, 1);
+                }
+
+                $this->$Atributo = $Valor;
+            }
+        }
     }
 
     public function getProfileImageSrc(){
@@ -107,5 +126,64 @@ class UserController extends AbstractController {
         } else {
             Log::doLog("Arquivo " . $this->informacoes["profile_img_filename"] . " [ " . $this->informacoes["profile_img_url"] . "] não completou o upload em: " . $TargetFile, "uploadProfileImage_error");
         }
+    }
+
+    public function logarUsuario(){
+        if(!isset($this->email) || strlen($this->email) == 0){
+            return;
+        }
+
+        if(!isset($this->senha) || strlen($this->senha) == 0){
+            return;
+        }
+
+        if(!$this->existeUsuario()){
+            Log::doLog("usuario inexistente! " . var_export($this->email, 1), "logarUsuario_erro", 1);
+            return;
+        }
+
+        $EmailDecriptado = $this->email;
+        $SenhaDecriptada = $this->senha;
+
+        $this->getPorEmail();
+
+        if(!$this->credenciaisCorretas($EmailDecriptado, $SenhaDecriptada)){
+            return;
+        }
+
+        $SessionController = new SessionController();
+        $SessionController->Usuario = $this;
+        if($SessionController->criar()){
+            Log::doLog("SESSION: " . var_export($_SESSION, 1), "usuarioLogado");
+        }else{
+            Log::doLog("SESSION: " . var_export($_SESSION, 1) . "<br><br>SessionController: " . var_export($SessionController, 1), "usuarioNaoLogado");
+        }
+
+        return;
+    }
+
+    public function existeUsuario(){
+        if(!isset($this->email) || strlen($this->email) == 0){
+            return;
+        }
+
+        $EmailEncryptado = Seguranca::encryptString($this->email);
+
+        return $this->Modal->existeUsuario($EmailEncryptado);
+    }
+
+    public function credenciaisCorretas(String $EmailDecriptado, String $SenhaDecriptada): bool{
+        if(Seguranca::encryptString($EmailDecriptado) === $this->email){
+            if(Seguranca::encryptString($SenhaDecriptada) === $this->senha){
+                return true;
+            }else{
+                Log::doLog("Senhas diferentes - 1. " . Seguranca::encryptString($SenhaDecriptada) . " / 2. " . $this->senha, "credenciaisIncorretas");
+                return false;
+            }
+        }else{
+            Log::doLog("Emails diferentes - 1. " . Seguranca::encryptString($EmailDecriptado) . " / 2. " . $this->email, "credenciaisIncorretas");
+            return false;
+        }
+        return false;
     }
 }

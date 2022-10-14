@@ -56,4 +56,33 @@ class User {
 
         return json_encode(["Sucesso" => true, "Resposta" => $Resultado]);
     }
+
+    public function getPorEmail($EmailEncryptado){
+        $Sql = "SELECT * FROM " . $this->Tabela . " WHERE esta_deletado = 0 AND email = :email";
+        $Statement = $this->Database->prepare($Sql);
+        $Statement->bindValue(":email", $EmailEncryptado);
+        $Statement->execute();
+		$Resultado = $Statement->fetch(PDO::FETCH_ASSOC);
+        if(!$Resultado){
+            return null;
+        }
+        
+        return $Resultado;
+    }
+
+    public function existeUsuario($EmailEncryptado) : bool{
+        $Sql = "SELECT * FROM " . $this->Tabela . " WHERE esta_deletado = 0 AND email = :email";
+        $Statement = $this->Database->prepare($Sql);
+        $Statement->bindValue(":email", $EmailEncryptado);
+        $Statement->execute();
+		$Resultado = $Statement->fetch(PDO::FETCH_ASSOC);
+        Log::doLog("Resultado: " . var_export($Resultado, 1) . "<br>SQL: " . var_export($Sql, 1) . "<br>EmailEncryptado: " . var_export($EmailEncryptado, 1), "resultadoExisteUsuario");
+        if($Resultado){
+            return true;
+        }
+
+        return false;
+    }
+
+    
 }

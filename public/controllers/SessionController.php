@@ -4,14 +4,14 @@ class SessionController extends AbstractController {
     public Int $data_criado;
     public Int $data_expiracao;
 
-    private UserController $Usuario;
+    public UserController $Usuario;
 
     public function __construct(){
         return $this->get();
     }
 
     public function criar() : bool{
-        if(!isset($this->Usuario) || !($this->Usuario instanceof User)){
+        if(!isset($this->Usuario) || !($this->Usuario instanceof UserController)){
             return false;
         }
 
