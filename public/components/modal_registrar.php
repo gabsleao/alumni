@@ -9,7 +9,7 @@ require_once __DIR__ . '/load.php';
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form class="row g-3 needs-validation" novalidate onsubmit="registrarUsuario(this);">
+                <form class="row g-3 needs-validation" novalidate>
                     <input type="hidden" id="tipo" value="USER">
                     <div class="col-md-12 align-self-end">
                         <label for="nome" class="form-label">Nome</label>
@@ -134,25 +134,64 @@ require_once __DIR__ . '/load.php';
 </div>
 
 <script>
-    //valida o form
+    //valida o form, caso ok envia o POST
     (() => {
         'use strict'
 
-        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        //pega o form pra validar
         const forms = document.querySelectorAll('.needs-validation')
 
-        // Loop over them and prevent submission
+        //verifica todos (em caso de multiplos forms)
         Array.from(forms).forEach(form => {
             form.addEventListener('submit', event => {
                 if (!form.checkValidity()) {
-                    event.preventDefault()
-                    event.stopPropagation()
+                    showToast("toastWhoops");
+                    event.preventDefault();
+                    event.stopPropagation();
+                } else {
+                    showToast("toastOperacaoConcluida");
+                    event.preventDefault();
+                    registrarUsuario(form);
                 }
 
                 form.classList.add('was-validated')
             }, false)
         })
     })()
+
+
+    function registrarUsuario(Data) {
+        var PostData = {
+            "nome": Data.nome.value,
+            // "profile_img_url" : Data.profile_img_url.value,
+            // "profile_img_filename": Data.profile_img_filename.value,
+            "email": Data.email.value,
+            "confirmar_email": Data.confirmar_email.value,
+            "senha": Data.senha.value,
+            "confirmar_senha": Data.confirmar_senha.value,
+            "estado": Data.estado.value,
+            "cidade": Data.cidade.value,
+            "tipo": Data.tipo.value,
+            "operacao": "registrar_usuario",
+            "controller": "UserController",
+        };
+
+        $.ajax({
+            type: "POST",
+            url: "./public/controllers/endpoint.php",
+            data: PostData,
+            success: function(response) {
+                $('#modalRegistrar').modal('hide');
+                $('#modalRegistrar').removeAttr("style");
+                $('#modalRegistrar').find('form').trigger('reset');
+                $('#modalRegistrar').find('form').removeClass('was-validated');
+                $('#modalRegistrar').modal('dispose');
+            },
+            error: function(response) {
+                showToast("toastWhoops");
+            }
+        });
+    }
 
     //preview imagem de perfil
     //https://developer.mozilla.org/en-US/docs/Web/API/File_API/Using_files_from_web_applications

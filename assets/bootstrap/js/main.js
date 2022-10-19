@@ -122,38 +122,6 @@ function notAllowed(document, like_id) {
   toast.show();//show it
 }
 
-function registrarUsuario(Data) {
-  var PostData = {
-    "nome": Data.nome.value,
-    // "profile_img_url" : Data.profile_img_url.value,
-    // "profile_img_filename": Data.profile_img_filename.value,
-    "email": Data.email.value,
-    "confirmar_email": Data.confirmar_email.value,
-    "senha": Data.senha.value,
-    "confirmar_senha": Data.confirmar_senha.value,
-    "estado": Data.estado.value,
-    "cidade": Data.cidade.value,
-    "tipo": Data.tipo.value,
-    "operacao": "registrar_usuario",
-    "controller": "UserController",
-  };
-
-  $.ajax({
-    type: "POST",
-    url: "./public/controllers/endpoint.php",
-    data: PostData,
-    beforeSend: function () {
-      showToast("toastOperacaoConcluida");
-    },
-    success: function (response) {
-      console.log('success');
-    },
-    error: function (response) {
-      console.log('error');
-    }
-  });
-}
-
 function logarUsuario(Data) {
   var PostData = {
     "email": Data.email.value,
