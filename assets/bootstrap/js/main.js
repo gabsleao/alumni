@@ -122,30 +122,6 @@ function notAllowed(document, like_id) {
   toast.show();//show it
 }
 
-function logarUsuario(Data) {
-  var PostData = {
-    "email": Data.email.value,
-    "senha": Data.senha.value,
-    "operacao": "logar_usuario",
-    "controller": "UserController",
-  };
-
-  $.ajax({
-    type: "POST",
-    url: "./public/controllers/endpoint.php",
-    data: PostData,
-    beforeSend: function () {
-      showToast("toastOperacaoConcluida");
-    },
-    success: function (response) {
-      console.log('success');
-    },
-    error: function (response) {
-      console.log('error');
-    }
-  });
-}
-
 
 function showToast(type) {
   console.log(document);

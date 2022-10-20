@@ -9,7 +9,7 @@ require_once __DIR__ . '/load.php';
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form class="row g-3 needs-validation" novalidate onsubmit="logarUsuario(this);">
+                <form class="row g-3 needs-validation" novalidate>
                     <div class="col-md-12 align-self-end">
                         <label for="email" class="form-label">Email</label>
                         <input type="text" class="form-control" id="email" required minlength="3" maxlength="50">
@@ -51,12 +51,38 @@ require_once __DIR__ . '/load.php';
         Array.from(forms).forEach(form => {
             form.addEventListener('submit', event => {
                 if (!form.checkValidity()) {
+                    showToast("toastWhoops");
                     event.preventDefault()
                     event.stopPropagation()
+                } else {
+                    showToast("toastOperacaoConcluida");
+                    event.preventDefault();
+                    logarUsuario(form);
                 }
 
                 form.classList.add('was-validated')
             }, false)
         })
     })()
+
+    function logarUsuario(Data) {
+        var PostData = {
+            "email": Data.email.value,
+            "senha": Data.senha.value,
+            "operacao": "logar_usuario",
+            "controller": "UserController",
+        };
+
+        $.ajax({
+            type: "POST",
+            url: "./public/controllers/endpoint.php",
+            data: PostData,
+            success: function(response) {
+                console.log('success');
+            },
+            error: function(response) {
+                console.log('error');
+            }
+        });
+    }
 </script>
