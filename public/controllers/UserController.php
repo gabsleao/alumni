@@ -139,8 +139,9 @@ class UserController extends AbstractController {
 
         if(!$this->existeUsuario()){
             Log::doLog("usuario inexistente! " . var_export($this->email, 1), "logarUsuario_erro", 1);
-            return;
+            Utils::sendResponse("Usuario nao existente.", 405);
         }
+        Log::doLog("usuario inexistente! " . var_export($this->email, 1), "nao deveria logar", 1);
 
         $EmailDecriptado = $this->email;
         $SenhaDecriptada = $this->senha;

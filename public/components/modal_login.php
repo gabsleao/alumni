@@ -79,9 +79,11 @@ require_once __DIR__ . '/load.php';
             data: PostData,
             success: function(response) {
                 console.log('success');
+                console.log(response);
             },
             error: function(response) {
                 console.log('error');
+                console.log(response);
             }
         });
     }
