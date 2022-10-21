@@ -50,8 +50,8 @@ require_once __DIR__ . '/load.php';
                         <div class="valid-feedback">
                             Excelente!
                         </div>
-                        <div class="invalid-feedback">
-                            Seu email precisa ser válido.
+                        <div class="invalid-feedback" id="feedback_email">
+                            Os emails são inválidos ou diferentes.
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -70,8 +70,8 @@ require_once __DIR__ . '/load.php';
                         <div class="valid-feedback">
                             Excelente!
                         </div>
-                        <div class="invalid-feedback">
-                            Sua senha precisa ter pelo menos 8 caracteres.
+                        <div class="invalid-feedback" id="feedback_senha">
+                            Sua senha precisa ser igual à senha da esquerda e ter pelo menos 8 caracteres.
                         </div>
                     </div>
                     <div class="col-md-5">
@@ -144,11 +144,33 @@ require_once __DIR__ . '/load.php';
         //verifica todos (em caso de multiplos forms)
         Array.from(forms).forEach(form => {
             form.addEventListener('submit', event => {
+                $("#feedback_email").removeClass("d-block");
+                $("#feedback_senha").removeClass("d-block");
                 if (!form.checkValidity()) {
                     showToast("toastWhoops");
                     event.preventDefault();
                     event.stopPropagation();
                 } else {
+                    var podeRegistrar = true;
+                    
+                    //validação adicional...
+                    if (form.email.value != form.confirmar_email.value) {
+                        $("#feedback_email").addClass("d-block");
+                        podeRegistrar = false;
+                    }
+
+                    if(form.senha.value != form.confirmar_senha.value){
+                        $("#feedback_senha").addClass("d-block");
+                        podeRegistrar = false;
+                    }
+
+                    if(!podeRegistrar){
+                        showToast("toastWhoops");
+                        event.preventDefault();
+                        event.stopPropagation();
+                        return;
+                    }
+
                     showToast("toastOperacaoConcluida");
                     event.preventDefault();
                     registrarUsuario(form);
@@ -186,6 +208,7 @@ require_once __DIR__ . '/load.php';
                 $('#modalRegistrar').find('form').trigger('reset');
                 $('#modalRegistrar').find('form').removeClass('was-validated');
                 $('#modalRegistrar').modal('dispose');
+                console.log(response);
             },
             error: function(response) {
                 showToast("toastWhoops");
