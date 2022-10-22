@@ -126,7 +126,7 @@ require_once __DIR__ . '/load.php';
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                <button type="submit" form="formRegistrar" class="btn btn-primary">Criar</button>
+                <button type="submit" form="formRegistrar" class="btn btn-primary" id="submit_formRegistrar">Criar</button>
             </div>
             </form>
         </div>
@@ -169,8 +169,6 @@ require_once __DIR__ . '/load.php';
                     event.stopPropagation();
                     return;
                 }
-
-                showToast("toastOperacaoConcluida");
                 event.preventDefault();
                 registrarUsuario(form);
             }
@@ -200,11 +198,21 @@ require_once __DIR__ . '/load.php';
             url: "./public/controllers/endpoint.php",
             data: PostData,
             success: function(response) {
-                $('#modalRegistrar').modal('hide');
-                $('#modalRegistrar').removeAttr("style");
-                $('#modalRegistrar').find('form').trigger('reset');
-                $('#modalRegistrar').find('form').removeClass('was-validated');
-                $('#modalRegistrar').modal('dispose');
+                responseJson = JSON.parse(response);
+                if (responseJson.status == 405) {
+                    showToast("toastUsuarioJaExiste");
+                    shake(document.getElementById("submit_formRegistrar"));
+                    $('#modalRegistrar').find('form').removeClass('was-validated');
+                    return;
+                } else {
+                    showToast("toastOperacaoConcluida");
+                    $('#modalRegistrar').modal('hide');
+                    $('#modalRegistrar').removeAttr("style");
+                    $('#modalRegistrar').find('form').trigger('reset');
+                    $('#modalRegistrar').find('form').removeClass('was-validated');
+                    $('#modalRegistrar').modal('dispose');
+                }
+
                 console.log(response);
             },
             error: function(response) {

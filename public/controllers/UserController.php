@@ -42,6 +42,10 @@ class UserController extends AbstractController {
             return;
         }
         
+        if($this->existeUsuario()){
+            Utils::sendResponse("Usuario jã existente.", 405);
+        }
+        
         if(isset($this->informacoes["profile_img_filename"]) && strlen($this->informacoes["profile_img_filename"]) > 0){
             $this->informacoes["profile_img_filename"] = basename(str_replace( "\\", '/', $this->informacoes["profile_img_filename"]));
             if(isset($this->informacoes["profile_img_url"]) && strlen($this->informacoes["profile_img_url"]) > 0){
@@ -138,10 +142,8 @@ class UserController extends AbstractController {
         }
 
         if(!$this->existeUsuario()){
-            Log::doLog("usuario inexistente! " . var_export($this->email, 1), "logarUsuario_erro", 1);
             Utils::sendResponse("Usuario nao existente.", 405);
         }
-        Log::doLog("usuario inexistente! " . var_export($this->email, 1), "nao deveria logar", 1);
 
         $EmailDecriptado = $this->email;
         $SenhaDecriptada = $this->senha;

@@ -32,7 +32,7 @@ require_once __DIR__ . '/load.php';
                     </div>
             </div>
             <div class="modal-footer">
-                <button type="submit" form="formLogin" class="btn btn-primary" id="botaoSubmit">Entrar</button>
+                <button type="submit" form="formLogin" class="btn btn-primary" id="submit_formLogin">Entrar</button>
             </div>
             </form>
         </div>
@@ -54,7 +54,6 @@ require_once __DIR__ . '/load.php';
                 event.preventDefault()
                 event.stopPropagation()
             } else {
-                showToast("toastOperacaoConcluida");
                 event.preventDefault();
                 logarUsuario(form);
             }
@@ -77,11 +76,15 @@ require_once __DIR__ . '/load.php';
             data: PostData,
             success: function(response) {
                 responseJson = JSON.parse(response);
+                
                 if (responseJson.status == 405) {
                     showToast("toastUsuarioNaoExiste");
-                    shake(document.getElementById("botaoSubmit"));
+                    shake(document.getElementById("submit_formLogin"));
                     $('#modalLogin').find('form').removeClass('was-validated');
+                    return;
                 }
+
+                showToast("toastOperacaoConcluida");
             },
             error: function(response) {
                 showToast("toastWhoops");
