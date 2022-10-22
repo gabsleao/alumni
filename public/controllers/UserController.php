@@ -43,7 +43,7 @@ class UserController extends AbstractController {
         }
         
         if($this->existeUsuario()){
-            Utils::sendResponse("Usuario jã existente.", 405);
+            Utils::sendResponse("Usuario já existente.", 405);
         }
         
         if(isset($this->informacoes["profile_img_filename"]) && strlen($this->informacoes["profile_img_filename"]) > 0){
