@@ -9,7 +9,7 @@ require_once __DIR__ . '/load.php';
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form class="row g-3 needs-validation" novalidate>
+                <form class="row g-3 needs-validation" novalidate id="formRegistrar">
                     <input type="hidden" id="tipo" value="USER">
                     <div class="col-md-12 align-self-end">
                         <label for="nome" class="form-label">Nome</label>
@@ -126,7 +126,7 @@ require_once __DIR__ . '/load.php';
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                <button type="submit" class="btn btn-primary">Criar</button>
+                <button type="submit" form="formRegistrar" class="btn btn-primary">Criar</button>
             </div>
             </form>
         </div>
@@ -134,53 +134,50 @@ require_once __DIR__ . '/load.php';
 </div>
 
 <script>
-    //valida o form, caso ok envia o POST
-    (() => {
-        'use strict'
+    //no evento do form submit
+    document.getElementById('formRegistrar').addEventListener('submit', validaFormRegistrar);
 
+    function validaFormRegistrar() {
         //pega o form pra validar
-        const forms = document.querySelectorAll('.needs-validation')
+        const forms = document.querySelectorAll('#formRegistrar')
 
         //verifica todos (em caso de multiplos forms)
         Array.from(forms).forEach(form => {
-            form.addEventListener('submit', event => {
-                $("#feedback_email").removeClass("d-block");
-                $("#feedback_senha").removeClass("d-block");
-                if (!form.checkValidity()) {
+            $("#feedback_email").removeClass("d-block");
+            $("#feedback_senha").removeClass("d-block");
+            if (!form.checkValidity()) {
+                showToast("toastWhoops");
+                event.preventDefault();
+                event.stopPropagation();
+            } else {
+                var podeRegistrar = true;
+
+                //validação adicional...
+                if (form.email.value != form.confirmar_email.value) {
+                    $("#feedback_email").addClass("d-block");
+                    podeRegistrar = false;
+                }
+
+                if (form.senha.value != form.confirmar_senha.value) {
+                    $("#feedback_senha").addClass("d-block");
+                    podeRegistrar = false;
+                }
+
+                if (!podeRegistrar) {
                     showToast("toastWhoops");
                     event.preventDefault();
                     event.stopPropagation();
-                } else {
-                    var podeRegistrar = true;
-                    
-                    //validação adicional...
-                    if (form.email.value != form.confirmar_email.value) {
-                        $("#feedback_email").addClass("d-block");
-                        podeRegistrar = false;
-                    }
-
-                    if(form.senha.value != form.confirmar_senha.value){
-                        $("#feedback_senha").addClass("d-block");
-                        podeRegistrar = false;
-                    }
-
-                    if(!podeRegistrar){
-                        showToast("toastWhoops");
-                        event.preventDefault();
-                        event.stopPropagation();
-                        return;
-                    }
-
-                    showToast("toastOperacaoConcluida");
-                    event.preventDefault();
-                    registrarUsuario(form);
+                    return;
                 }
 
-                form.classList.add('was-validated')
-            }, false)
-        })
-    })()
+                showToast("toastOperacaoConcluida");
+                event.preventDefault();
+                registrarUsuario(form);
+            }
 
+            form.classList.add('was-validated')
+        })
+    }
 
     function registrarUsuario(Data) {
         var PostData = {

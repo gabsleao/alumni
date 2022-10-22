@@ -124,8 +124,8 @@ function notAllowed(document, like_id) {
 
 
 function showToast(type) {
-  console.log(document);
   var toastElement = document.getElementById(type);
   var toast = new bootstrap.Toast(toastElement);
+  
   toast.show();
 }

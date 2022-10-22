@@ -9,7 +9,7 @@ require_once __DIR__ . '/load.php';
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form class="row g-3 needs-validation" novalidate>
+                <form class="row g-3 needs-validation" novalidate id="formLogin">
                     <div class="col-md-12 align-self-end">
                         <label for="email" class="form-label">Email</label>
                         <input type="text" class="form-control" id="email" required minlength="3" maxlength="50">
@@ -32,7 +32,7 @@ require_once __DIR__ . '/load.php';
                     </div>
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Entrar</button>
+                <button type="submit" form="formLogin" class="btn btn-primary" id="botaoSubmit">Entrar</button>
             </div>
             </form>
         </div>
@@ -40,30 +40,28 @@ require_once __DIR__ . '/load.php';
 </div>
 
 <script>
-    //valida o form
-    (() => {
-        'use strict'
+    //no evento do form submit
+    document.getElementById('formLogin').addEventListener('submit', validaFormLogin);
 
+    function validaFormLogin() {
         // Fetch all the forms we want to apply custom Bootstrap validation styles to
-        const forms = document.querySelectorAll('.needs-validation')
+        const forms = document.querySelectorAll('#formLogin')
 
         // Loop over them and prevent submission
         Array.from(forms).forEach(form => {
-            form.addEventListener('submit', event => {
-                if (!form.checkValidity()) {
-                    showToast("toastWhoops");
-                    event.preventDefault()
-                    event.stopPropagation()
-                } else {
-                    showToast("toastOperacaoConcluida");
-                    event.preventDefault();
-                    logarUsuario(form);
-                }
+            if (!form.checkValidity()) {
+                showToast("toastWhoops");
+                event.preventDefault()
+                event.stopPropagation()
+            } else {
+                showToast("toastOperacaoConcluida");
+                event.preventDefault();
+                logarUsuario(form);
+            }
 
-                form.classList.add('was-validated')
-            }, false)
+            form.classList.add('was-validated')
         })
-    })()
+    }
 
     function logarUsuario(Data) {
         var PostData = {
@@ -78,12 +76,16 @@ require_once __DIR__ . '/load.php';
             url: "./public/controllers/endpoint.php",
             data: PostData,
             success: function(response) {
-                console.log('success');
-                console.log(response);
+                responseJson = JSON.parse(response);
+                if (responseJson.status == 405) {
+                    showToast("toastUsuarioNaoExiste");
+                    shake(document.getElementById("botaoSubmit"));
+                    $('#modalLogin').find('form').removeClass('was-validated');
+                }
             },
             error: function(response) {
-                console.log('error');
-                console.log(response);
+                showToast("toastWhoops");
+                console.log('error: ' + response);
             }
         });
     }

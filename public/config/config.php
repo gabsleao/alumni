@@ -1,7 +1,5 @@
 <?php
 
-require_once  __DIR__ . '/head.php';
-
 spl_autoload_register(function ($Classe) {
     $Classe = str_replace('\\', DIRECTORY_SEPARATOR, $Classe);
     $Path = __DIR__ . DIRECTORY_SEPARATOR . '../controllers/' . $Classe . '.php';
