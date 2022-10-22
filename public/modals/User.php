@@ -76,7 +76,7 @@ class User {
         $Statement->bindValue(":email", $EmailEncryptado);
         $Statement->execute();
 		$Resultado = $Statement->fetch(PDO::FETCH_ASSOC);
-        Log::doLog("Resultado: " . var_export($Resultado, 1) . "<br>SQL: " . var_export($Sql, 1) . "<br>EmailEncryptado: " . var_export($EmailEncryptado, 1), "resultadoExisteUsuario");
+
         if($Resultado){
             return true;
         }

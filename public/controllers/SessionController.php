@@ -7,11 +7,11 @@ class SessionController extends AbstractController {
     public UserController $Usuario;
 
     public function __construct(){
-        return $this->get();
+
     }
 
     public function criar() : bool{
-        if(!isset($this->Usuario) || !($this->Usuario instanceof UserController)){
+        if(!isset($this->Usuario)){
             return false;
         }
 
@@ -22,7 +22,25 @@ class SessionController extends AbstractController {
         $this->data_criado = time();
         $this->data_expiracao = time() + 900; //15 minutos
         
-        $_SESSION["Session"] = $this;
+        $Session = new stdClass();
+        $Session->data_criado = $this->data_criado;
+        $Session->data_expiracao = $this->data_expiracao;
+
+        $Session->Usuario = new stdClass();
+        foreach($this->Usuario as $Atributo => $Valor){
+            //ignorar o modal
+            if($Atributo instanceof User){
+                continue;
+            }
+
+            if($Atributo == "senha"){
+                continue;
+            }
+
+            $Session->Usuario->$Atributo = $Valor;
+        }
+        
+        $_SESSION["Session"] = $Session;
         return true;
     }
 
@@ -30,13 +48,14 @@ class SessionController extends AbstractController {
         return;
     }
 
-    public function excluir(){
+    public function excluir() {
         if(!isset($_SESSION["Session"])){
-            return;
+            Utils::sendResponse("SESSION_NAO_SETADA", 405);
         }
 
         unset($_SESSION["Session"]);
-
+        $_SESSION = [];
+        
         if (ini_get("session.use_cookies")) {
             $params = session_get_cookie_params();
             setcookie(session_name(), '', time() - 42000,
@@ -46,9 +65,10 @@ class SessionController extends AbstractController {
         }
 
         session_destroy();
+        Utils::sendResponse("USUARIO_DESLOGADO", 200);
     }
 
     public function get(){
-        return session_start();
+        
     }
 }

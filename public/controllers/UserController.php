@@ -43,7 +43,7 @@ class UserController extends AbstractController {
         }
         
         if($this->existeUsuario()){
-            Utils::sendResponse("Usuario já existente.", 405);
+            Utils::sendResponse("USUARIO_JA_EXISTENTE", 405);
         }
         
         if(isset($this->informacoes["profile_img_filename"]) && strlen($this->informacoes["profile_img_filename"]) > 0){
@@ -60,6 +60,7 @@ class UserController extends AbstractController {
         $this->esta_deletado = 0;
         
         $this->Modal->criar($this);
+        Utils::sendResponse("USUARIO_CRIADO", 200);
     }
 
     public function editar(){
@@ -142,7 +143,7 @@ class UserController extends AbstractController {
         }
 
         if(!$this->existeUsuario()){
-            Utils::sendResponse("Usuario nao existente.", 405);
+            Utils::sendResponse("NAO_EXISTENTE", 405);
         }
 
         $EmailDecriptado = $this->email;
@@ -151,18 +152,18 @@ class UserController extends AbstractController {
         $this->getPorEmail();
 
         if(!$this->credenciaisCorretas($EmailDecriptado, $SenhaDecriptada)){
-            return;
+            Utils::sendResponse("SENHA_INCORRETA", 405);
         }
 
         $SessionController = new SessionController();
         $SessionController->Usuario = $this;
         if($SessionController->criar()){
             Log::doLog("SESSION: " . var_export($_SESSION, 1), "usuarioLogado");
-        }else{
-            Log::doLog("SESSION: " . var_export($_SESSION, 1) . "<br><br>SessionController: " . var_export($SessionController, 1), "usuarioNaoLogado");
+            Utils::sendResponse("USUARIO_LOGADO", 200);
         }
-
-        return;
+        
+        Log::doLog("SESSION: " . var_export($_SESSION, 1) . "<br><br>SessionController: " . var_export($SessionController, 1), "usuarioNaoLogado");
+        Utils::sendResponse("ERROR", 200);
     }
 
     public function existeUsuario(){

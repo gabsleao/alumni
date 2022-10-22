@@ -5,7 +5,7 @@ require_once __DIR__ . '/load.php';
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="modalLogin">Entrar</h1>
+                <h1 class="modal-title fs-5">Entrar</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -76,15 +76,52 @@ require_once __DIR__ . '/load.php';
             data: PostData,
             success: function(response) {
                 responseJson = JSON.parse(response);
-                
+
                 if (responseJson.status == 405) {
-                    showToast("toastUsuarioNaoExiste");
-                    shake(document.getElementById("submit_formLogin"));
+                    switch (responseJson.mensagem) {
+                        case "NAO_EXISTENTE":
+                            showToast("toastUsuarioNaoExiste");
+                            shake(document.getElementById("submit_formLogin"));
+                            $('#modalLogin').find('form').removeClass('was-validated');
+                            return;
+                            break;
+
+                        case "SENHA_INCORRETA":
+                            showToast("toastSenhaIncorreta");
+                            $('#modalLogin').removeAttr("style");
+                            $('#modalLogin').modal('hide');
+                            $('#modalLogin').find('form').trigger('reset');
+                            $('#modalLogin').find('form').removeClass('was-validated');
+                            $('#modalLogin').modal('dispose');
+                            return;
+                            break;
+
+                        default:
+                            showToast("toastWhoops");
+                            $('#modalLogin').find('form').removeClass('was-validated');
+                            return;
+                            break;
+                    }
+                }
+
+                console.log("status: " + responseJson.status);
+                console.log("mensagem: " + responseJson.mensagem);
+
+                if (responseJson.status == 200 && responseJson.mensagem == "USUARIO_LOGADO") {
+                    showToast("toastLogando");
+                    $('#modalLogin').removeAttr("style");
+                    $('#modalLogin').modal('hide');
+                    $('#modalLogin').find('form').trigger('reset');
                     $('#modalLogin').find('form').removeClass('was-validated');
+                    $('#modalLogin').modal('dispose');
+                    setTimeout(function() {
+                        window.location.href = "./index.php";
+                    }, 2000);
                     return;
                 }
 
-                showToast("toastOperacaoConcluida");
+                //deu zika
+                showToast("toastWhoops");
             },
             error: function(response) {
                 showToast("toastWhoops");

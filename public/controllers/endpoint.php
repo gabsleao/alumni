@@ -29,6 +29,10 @@ switch ($_POST["operacao"]) {
         $AbstractController->Controller->logarUsuario();
         break;
 
+    case "deslogar_usuario":
+        $AbstractController->Controller->excluir();
+        break;
+    
     default:
         break;
 }

@@ -22,4 +22,5 @@ spl_autoload_register(function ($Classe) {
     }
 });
 
-$SessionController = new SessionController();
+//$SessionController = new SessionController();
+session_start();

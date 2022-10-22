@@ -5,7 +5,7 @@ require_once __DIR__ . '/load.php';
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="modalRegistrar">Registrar nova conta</h1>
+                <h1 class="modal-title fs-5">Registrar nova conta</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -200,20 +200,33 @@ require_once __DIR__ . '/load.php';
             success: function(response) {
                 responseJson = JSON.parse(response);
                 if (responseJson.status == 405) {
-                    showToast("toastUsuarioJaExiste");
-                    shake(document.getElementById("submit_formRegistrar"));
-                    $('#modalRegistrar').find('form').removeClass('was-validated');
-                    return;
-                } else {
+                    switch (responseJson.mensagem) {
+                        case "USUARIO_JA_EXISTENTE":
+                            showToast("toastUsuarioJaExiste");
+                            shake(document.getElementById("submit_formRegistrar"));
+                            $('#modalRegistrar').find('form').removeClass('was-validated');
+                            return;
+                            break;
+
+                        default:
+                            showToast("toastWhoops");
+                            $('#modalRegistrar').find('form').removeClass('was-validated');
+                            return;
+                            break;
+                    }
+                }
+
+                if (responseJson.status == 200 && responseJson.mensagem == "USUARIO_CRIADO") {
                     showToast("toastOperacaoConcluida");
-                    $('#modalRegistrar').modal('hide');
                     $('#modalRegistrar').removeAttr("style");
+                    $('#modalRegistrar').modal('hide');
                     $('#modalRegistrar').find('form').trigger('reset');
                     $('#modalRegistrar').find('form').removeClass('was-validated');
                     $('#modalRegistrar').modal('dispose');
+                    return;
                 }
 
-                console.log(response);
+                showToast("toastWhoops");
             },
             error: function(response) {
                 showToast("toastWhoops");

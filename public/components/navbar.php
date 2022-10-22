@@ -1,8 +1,11 @@
 <?php
-$UserIcon = isset($_SESSION["Session"]) ? $_SESSION["Session"]->Usuario->getProfileImageSrc() : "assets/icons/guest_caret_down.svg";
-$Username = isset($_SESSION["Session"]) ? $_SESSION["Session"]->Usuario->getUsername() : "visitante";
+$UserIcon = "assets/icons/guest_caret_down.svg";
+if(isset($_SESSION["Session"]) && strlen($_SESSION["Session"]->Usuario->informacoes["profile_img_url"]) > 0){
+    $UserIcon = $_SESSION["Session"]->Usuario->informacoes["profile_img_url"];
+}
+
+$Username = isset($_SESSION["Session"]) ? $_SESSION["Session"]->Usuario->nome : "visitante";
 $Logado = isset($_SESSION["Session"]) ? true : false;
-var_dump($_SESSION);
 
 ?>
 
@@ -45,7 +48,7 @@ var_dump($_SESSION);
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><button class="dropdown-item" type="button"><img src="assets/icons/power.svg" width="20" height="20"> Sair</button></li>
+                        <li><button class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#modalDeslogar"><img src="assets/icons/power.svg" width="20" height="20"> Sair</button></li>
                     <?php } ?>
 
                 </ul>
