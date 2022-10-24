@@ -70,6 +70,7 @@ require_once __DIR__ . '/load.php';
             "controller": "UserController",
         };
 
+        showToast("toastLogando");
         $.ajax({
             type: "POST",
             url: "./public/controllers/endpoint.php",
@@ -108,7 +109,6 @@ require_once __DIR__ . '/load.php';
                 console.log("mensagem: " + responseJson.mensagem);
 
                 if (responseJson.status == 200 && responseJson.mensagem == "USUARIO_LOGADO") {
-                    showToast("toastLogando");
                     $('#modalLogin').removeAttr("style");
                     $('#modalLogin').modal('hide');
                     $('#modalLogin').find('form').trigger('reset');
@@ -117,6 +117,7 @@ require_once __DIR__ . '/load.php';
                     setTimeout(function() {
                         window.location.href = "./index.php";
                     }, 2000);
+                    showToast("toastLogado");
                     return;
                 }
 

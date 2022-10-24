@@ -30,7 +30,7 @@ $Logado = isset($_SESSION["Session"]) ? true : false;
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end rounded-3 text-muted mt-3" id="dropdown">
                     <p class="dropdown-item">
-                        Olá, <?= $Username ?>! Seja bem-vindo(a).
+                        Olá, <u><b><?= $Username ?></b></u>! Seja bem-vindo(a).
                     </p>
                     <li>
                         <hr class="dropdown-divider">

@@ -32,6 +32,8 @@ require_once __DIR__ . '/load.php';
             "controller": "SessionController",
         };
 
+        showToast("toastDeslogando");
+        
         $.ajax({
             type: "POST",
             url: "./public/controllers/endpoint.php",
@@ -62,13 +64,13 @@ require_once __DIR__ . '/load.php';
                 console.log("mensagem: " + responseJson.mensagem);
 
                 if (responseJson.status == 200 && responseJson.mensagem == "USUARIO_DESLOGADO") {
-                    showToast("toastDeslogando");
                     $('#modalDeslogar').removeAttr("style");
                     $('#modalDeslogar').modal('hide');
                     $('#modalDeslogar').modal('dispose');
                     setTimeout(function() {
                         window.location.href = "./index.php";
                     }, 2000);
+                    showToast("toastDeslogado");
                     return;
                 }
 
