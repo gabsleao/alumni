@@ -1,6 +1,3 @@
-<?php
-require_once __DIR__ . '/load.php';
-?>
 <div class="modal fade" id="modalDeslogar" tabindex="-1" aria-labelledby="modalDeslogar" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

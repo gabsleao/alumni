@@ -2,6 +2,6 @@ RewriteEngine On
 RewriteBase /alumni/
 
 RewriteCond %{THE_REQUEST} /public/([^\s?]*) [NC]
-RewriteRule ^ %1 [L,NE,R=302]
+RewriteRule ^ %1 [L,NE,R=307]
 
 RewriteRule ^((?!public/).*)$ public/$1 [L,NC]

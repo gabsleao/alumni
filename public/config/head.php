@@ -4,8 +4,8 @@
     <meta name="description" content="Sistema Web para Busca de Cursos e Instituições">
     <meta name="author" content="gabriel.leao">
 
-    <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="icon" href="./public/assets/icons/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="./public/assets/icons/favicon.svg">
 
 
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css">

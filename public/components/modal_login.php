@@ -1,6 +1,3 @@
-<?php
-require_once __DIR__ . '/load.php';
-?>
 <div class="modal fade" id="modalLogin" tabindex="-1" aria-labelledby="modalLogin" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -69,7 +66,7 @@ require_once __DIR__ . '/load.php';
             "operacao": "logar_usuario",
             "controller": "UserController",
         };
-
+        
         showToast("toastLogando");
         $.ajax({
             type: "POST",
