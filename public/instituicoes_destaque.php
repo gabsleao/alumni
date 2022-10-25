@@ -43,14 +43,36 @@ if (isset($getInstituicoesDestaqueRequest->Sucesso) && $getInstituicoesDestaqueR
 
             <div class="col-6">
                 <p class="lead">
-                    Nenhuma instituição em destaque recentemente.
+                    Nenhuma instituição em destaque recentemente...
                 </p>
             </div>
 
             <div class="col-2">
 
             </div>
-    <?php
+        </div>
+
+        <div class="row mt-3 mb-5">
+            <div class="col-4">
+
+            </div>
+
+            <div class="col-4 d-flex justify-content-center">
+                <button type="button" class="btn btn-secondary" onClick="verInstituicoes();">Ver todas</button>
+            </div>
+
+            <div class="col-4">
+
+            </div>
+        </div>
+
+        <script>
+            function verInstituicoes() {
+                alert("abrindo...");
+            }
+        </script>
+
+<?php
     }
 } else {
     echo "Whoops! Algo deu errado...";

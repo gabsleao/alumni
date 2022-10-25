@@ -9,8 +9,7 @@ require_once __DIR__ . '/components/navbar.php';
 
 <div class="container">
     <div class="card text-center">
-        <form onsubmit="alert(JSON.stringify(this));" method="POST">
-            <input type="hidden" id="operacao" value="buscar_instituicoes_com_filtro">
+        <form id="formBuscarMain" novalidate method="GET" action="instituicoes.php">
             <div class="card-header">
                 <nav>
                     <ul class="nav nav-tabs card-header-tabs" role="tablist">
@@ -62,7 +61,7 @@ require_once __DIR__ . '/components/navbar.php';
                         </div>
                     </div>
                     <div class="col-2">
-                        <label for="nome" class="form-label float-start">Localização</label>
+                        <label for="localizacao" class="form-label float-start">Localização</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="localizacao" minlength="2">
                         </div>
@@ -85,14 +84,40 @@ require_once __DIR__ . '/components/navbar.php';
                 <div class="row mb-1">
                     <div class="col-12">
                         <div class="d-flex align-items-end flex-column align-bottom">
-                            <div class="mt-auto p-2"><button class="btn btn-primary" type="submit">Buscar</button></div>
+                            <div class="mt-auto p-2"><button class="btn btn-primary" type="submit" form="formBuscarMain">Buscar</button></div>
                         </div>
                     </div>
                 </div>
             </div>
         </form>
     </div>
+
+    <script>
+        //no evento do form submit
+        document.getElementById('formBuscarMain').addEventListener('submit', enviaGetFormBuscarMain);
+
+        function enviaGetFormBuscarMain() {
+            var pagina = $('#formBuscarMain').attr('action');
+            showToast("toastOperacaoConcluida");
+            event.preventDefault();
+
+            var Data = {
+                "tipo": this.tipo.value,
+                "nome": this.nome.value,
+                "localizacao": this.localizacao.value,
+                "valor": this.valor.value,
+                "modalidade_presencial": $('#modalidade_presencial').is(":checked"),
+                "modalidade_remoto": $('#modalidade_remoto').is(":checked"),
+            };
+
+            var URL = encodeURIComponent(JSON.stringify(Data));
+            
+            setTimeout(function() {
+                window.location.href = "./public/" + pagina + "?json=" + URL;
+            }, 2500);
+        }
+    </script>
     <?php
-        require_once __DIR__ . "/instituicoes_destaque.php";
+    require_once __DIR__ . "/instituicoes_destaque.php";
     ?>
 </div>
