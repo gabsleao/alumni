@@ -85,7 +85,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Fechar"></button>
         </div>
         <div class="toast-body">
-            Usuário <u><b><?php echo $_SESSION["Session"]->Usuario->nome; ?></b></u> deslogado!
+            Usuário <u><b><?php $_SESSION["Session"]->Usuario->nome ?? ""; ?></b></u> deslogado!
         </div>
     </div>
 
