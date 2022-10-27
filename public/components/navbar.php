@@ -41,7 +41,7 @@ $Logado = isset($_SESSION["Session"]) ? true : false;
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><button class="dropdown-item" type="button"><img src="assets/icons/forgot_pass.svg" width="20" height="20"> Esqueceu sua senha?</button></li>
+                        <li><button class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#modalRecuperarSenha"><img src="assets/icons/forgot_pass.svg" width="20" height="20"> Esqueceu sua senha?</button></li>
                     <?php } else { ?>
                         <li><button class="dropdown-item" type="button"><img src="assets/icons/user_list.svg" width="20" height="20"> Ver perfil</button></li>
                         <li><button class="dropdown-item" type="button"><img src="assets/icons/gear.svg" width="20" height="20"> Configurações</button></li>

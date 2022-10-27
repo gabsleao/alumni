@@ -190,4 +190,22 @@ class UserController extends AbstractController {
         }
         return false;
     }
+
+    public function recuperarSenha(){
+        if(!isset($this->email) || strlen($this->email) == 0){
+            return;
+        }
+
+        if(!$this->existeUsuario()){
+            Utils::sendResponse("NAO_EXISTENTE", 405);
+        }
+
+        $SendMail = new SendMail();
+        $EmailEnviado = $SendMail->enviarEmail($this->email);
+
+        if($EmailEnviado){
+            Utils::sendResponse("EMAIL_ENVIADO", 200);
+            return;
+        }
+    }
 }

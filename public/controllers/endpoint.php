@@ -33,6 +33,11 @@ switch ($_POST["operacao"]) {
         $AbstractController->Controller->excluir();
         break;
     
+    case "recuperar_senha":
+        $AbstractController->Controller->email = $_POST["email"];
+        $AbstractController->Controller->recuperarSenha();
+        break;
+    
     default:
         break;
 }

@@ -14,6 +14,21 @@
         </div>
     </div>
 
+    <div class="toast fade" id="toastEmailEnviadoRecuperarSenha">
+        <div class="toast-header">
+            <svg class="bd-placeholder-img rounded me-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
+                <rect width="100%" height="100%" fill="#62ff00"></rect>
+            </svg>
+
+            <strong class="me-auto">Sucesso!</strong>
+            <small>agora mesmo</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Fechar"></button>
+        </div>
+        <div class="toast-body">
+            Se o email existir, um email de recuperação de senha será enviado!
+        </div>
+    </div>
+
     <div class="toast fade" id="toastUsuarioNaoExiste">
         <div class="toast-header">
             <svg class="bd-placeholder-img rounded me-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
