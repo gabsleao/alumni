@@ -41,6 +41,9 @@ require_once __DIR__ . '/components/navbar.php';
               <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                 <p class="mb-0">Estado</p><?= $_SESSION["Session"]->Usuario->informacoes["estado"] ?>
               </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                <p class="mb-0">Senha</p><a href data-bs-toggle="modal" data-bs-target="#modalMudarSenha"><img src="assets/icons/lock_icon.svg" width="20" height="20"></a>
+              </li>
             </ul>
           </div>
         </div>

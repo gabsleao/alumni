@@ -30,8 +30,8 @@ $Logado = isset($_SESSION["Session"]) ? true : false;
                         <img src="<?= $UserIcon ?>" alt="Usuário" width="50" height="50" id="userIcon">
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end rounded-3 text-muted mt-3" id="dropdown">
-                        <p class="dropdown-item">
-                            Olá, <u><b><?= $Username ?></b></u>! Seja bem-vindo(a).
+                        <p class="ms-3">
+                            Olá, <u><b><?= $Username ?></b></u>!<br> Seja bem-vindo(a).
                         </p>
                         <li>
                             <hr class="dropdown-divider">
@@ -45,7 +45,7 @@ $Logado = isset($_SESSION["Session"]) ? true : false;
                             <li><button class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#modalRecuperarSenha"><img src="assets/icons/forgot_pass.svg" width="20" height="20"> Esqueceu sua senha?</button></li>
                         <?php } else { ?>
                             <li><button class="dropdown-item" type="button" onclick="window.location.href = './public/perfil_usuario.php';"><img src="assets/icons/user_list.svg" width="20" height="20"> Ver perfil</button></li>
-                            <li><button class="dropdown-item" type="button"><img src="assets/icons/gear.svg" width="20" height="20"> Configurações</button></li>
+                            <!-- <li><button class="dropdown-item" type="button"><img src="assets/icons/gear.svg" width="20" height="20"> Configurações</button></li> -->
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
