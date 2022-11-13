@@ -1,15 +1,15 @@
 <?php
 $InstituicaoController = new AbstractController("InstituicaoController");
 
-$getInstituicoesDestaqueRequest = json_decode($InstituicaoController->get());
+$Instituicoes = json_decode($InstituicaoController->getAll());
 
-if (isset($getInstituicoesDestaqueRequest->Sucesso) && $getInstituicoesDestaqueRequest->Sucesso) {
-    if (isset($getInstituicoesDestaqueRequest->Resposta) && is_array($getInstituicoesDestaqueRequest->Resposta) && count($getInstituicoesDestaqueRequest->Resposta) > 0) {
+if (isset($Instituicoes->Sucesso) && $Instituicoes->Sucesso) {
+    if (isset($Instituicoes->Resposta) && is_array($Instituicoes->Resposta) && count($Instituicoes->Resposta) > 0) {
 ?>
         <div class="row row-cols-1 row-cols-md-3 g-4 mt-3 mb-5">
             <div class="col">
                 <?php
-                foreach ($getInstituicoesDestaqueRequest->Resposta as $InstituicaoDestaque) {
+                foreach ($Instituicoes->Resposta as $InstituicaoDestaque) {
                     $OnClickFunction = isset($_SESSION["UsuarioLogado"]) ? "like(this);" : "notAllowed(document);";
                     var_dump("INSTITUICAO: $InstituicaoDestaque") . '<br>';
                 ?>
@@ -43,7 +43,7 @@ if (isset($getInstituicoesDestaqueRequest->Sucesso) && $getInstituicoesDestaqueR
 
             <div class="col-6">
                 <p class="lead">
-                    Nenhuma instituição em destaque recentemente...
+                    Nenhuma instituição encontrada a partir dos filtros selecionados ):
                 </p>
             </div>
 
@@ -51,27 +51,6 @@ if (isset($getInstituicoesDestaqueRequest->Sucesso) && $getInstituicoesDestaqueR
 
             </div>
         </div>
-
-        <div class="row mt-3 mb-5">
-            <div class="col-4">
-
-            </div>
-
-            <div class="col-4 d-flex justify-content-center">
-                <button type="button" class="btn btn-secondary" onClick="verInstituicoes();">Ver todas</button>
-            </div>
-
-            <div class="col-4">
-
-            </div>
-        </div>
-
-        <script>
-            function verInstituicoes() {
-                window.location.href = "./public/instituicoes_filtro.php";
-            }
-        </script>
-
 <?php
     }
 } else {

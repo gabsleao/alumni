@@ -9,7 +9,7 @@
                 <form class="row g-3 needs-validation" novalidate id="formMudarSenha">
                     <div class="col-md-12 align-self-end">
                         <label for="email" class="form-label">Email</label>
-                        <input type="text" class="form-control" id="email" required minlength="3" maxlength="50" value="<?= Seguranca::decryptString($_SESSION["Session"]->Usuario->email); ?>">
+                        <input type="text" class="form-control" id="email" required minlength="3" maxlength="50" value="<?= isset($_SESSION["Session"]->Usuario->email) ? Seguranca::decryptString($_SESSION["Session"]->Usuario->email) : ''; ?>">
                         <div class="valid-feedback">
                             Excelente!
                         </div>

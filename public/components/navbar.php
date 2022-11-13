@@ -1,6 +1,6 @@
 <?php
 $UserIcon = "assets/icons/guest_caret_down.svg";
-if(isset($_SESSION["Session"]) && strlen($_SESSION["Session"]->Usuario->informacoes["profile_img_url"]) > 0){
+if (isset($_SESSION["Session"]) && strlen($_SESSION["Session"]->Usuario->informacoes["profile_img_url"]) > 0) {
     $UserIcon = $_SESSION["Session"]->Usuario->informacoes["profile_img_url"];
 }
 
