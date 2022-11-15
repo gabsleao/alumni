@@ -12,20 +12,25 @@ $Logado = isset($_SESSION["Session"]) ? true : false;
 <nav class="bg-light shadow-sm mb-3 rounded">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-11 mt-2 mb-2">
+            <div class="col-1 mt-2">
                 <a class="navbar-brand ms-3" href="index.php">
                     <img src="assets/icons/logo.svg" alt="Bootstrap" width="50" height="60">
                 </a>
             </div>
 
-            <!-- <div class="col-2 mt-2">
-                    <div class="d-flex align-items-end flex-column">
-                        <button class="dropdown-item" type="button"><img src="assets/icons/location.svg" width="20" height="20"> Pegar localização atual</button>
-                    </div>
-                </div> -->
+            <div class="col-1 mt-4">
+                <li class="nav-item dropdown list-unstyled">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Contribuir
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="./adicionar_instituicoes.php">Adicionar Instituição</a></li>
+                    </ul>
+                </li>
+            </div>
 
-            <div class="col-1 mt-2 mb-2">
-                <div class="dropdown">
+            <div class="col-10 mt-2">
+                <div class="dropdown d-flex align-items-end flex-column align-bottom">
                     <a class="ms-3" href="#" data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="<?= $UserIcon ?>" alt="Usuário" width="50" height="50" id="userIcon">
                     </a>

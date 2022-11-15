@@ -19,17 +19,17 @@ $Parametros = Utils::processarGet($_GET["json"] ?? []);
                     Tipo
                     <input type="hidden" id="tipo" value="<?= $Parametros->tipo; ?>">
                     <li class="list-unstyled">
-                        <input class="form-check-input" type="checkbox" value="escolas" id="checkbox_escolas">
-                        <label class="form-check-label" for="checkbox_escolas">Escolas</label><br>
+                        <input class="form-check-input" type="checkbox" value="escola" id="checkbox_escola">
+                        <label class="form-check-label" for="checkbox_escola">Escolas</label><br>
 
-                        <input class="form-check-input" type="checkbox" value="faculdades" id="checkbox_faculdades">
-                        <label class="form-check-label" for="checkbox_faculdades">Faculdades</label><br>
+                        <input class="form-check-input" type="checkbox" value="faculdade" id="checkbox_faculdade">
+                        <label class="form-check-label" for="checkbox_faculdade">Faculdades</label><br>
 
-                        <input class="form-check-input" type="checkbox" value="idiomas" id="checkbox_idiomas">
-                        <label class="form-check-label" for="checkbox_idiomas">Idiomas</label><br>
+                        <input class="form-check-input" type="checkbox" value="idioma" id="checkbox_idioma">
+                        <label class="form-check-label" for="checkbox_idioma">Idiomas</label><br>
 
-                        <input class="form-check-input" type="checkbox" value="profissionalizantes" id="checkbox_profissionalizantes">
-                        <label class="form-check-label" for="checkbox_profissionalizantes">Profissionalizantes</label><br>
+                        <input class="form-check-input" type="checkbox" value="profissionalizante" id="checkbox_profissionalizante">
+                        <label class="form-check-label" for="checkbox_profissionalizante">Profissionalizantes</label><br>
 
                         <input class="form-check-input" type="checkbox" value="outros" id="checkbox_outros">
                         <label class="form-check-label" for="checkbox_outros">Outros</label>

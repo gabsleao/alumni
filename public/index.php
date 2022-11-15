@@ -16,16 +16,16 @@ require_once __DIR__ . '/components/navbar.php';
                         <img src="assets/imgs/faculdade.jpg" class="card-img-top mb-3" alt="..." height="240">
 
                         <li class="nav-item">
-                            <a class="nav-link active" href="#" id="nav-escola-tab" data-bs-toggle="tab" data-bs-target="#nav-escola" type="button" role="tab" aria-controls="nav-escola" aria-selected="true" onclick="mudarTipo('escolas');">Escolas</a>
+                            <a class="nav-link active" href="#" id="nav-escola-tab" data-bs-toggle="tab" data-bs-target="#nav-escola" type="button" role="tab" aria-controls="nav-escola" aria-selected="true" onclick="mudarTipo('escola');">Escolas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#" id="nav-faculdade-tab" data-bs-toggle="tab" data-bs-target="#nav-faculdade" type="button" role="tab" aria-controls="nav-faculdade" aria-selected="true" onclick="mudarTipo('faculdades');">Faculdades</a>
+                            <a class="nav-link" href="#" id="nav-faculdade-tab" data-bs-toggle="tab" data-bs-target="#nav-faculdade" type="button" role="tab" aria-controls="nav-faculdade" aria-selected="true" onclick="mudarTipo('faculdade');">Faculdades</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#" id="nav-idiomas-tab" data-bs-toggle="tab" data-bs-target="#nav-idiomas" type="button" role="tab" aria-controls="nav-idiomas" aria-selected="true" onclick="mudarTipo('idiomas');">Idiomas</a>
+                            <a class="nav-link" href="#" id="nav-idioma-tab" data-bs-toggle="tab" data-bs-target="#nav-idioma" type="button" role="tab" aria-controls="nav-idiomas" aria-selected="true" onclick="mudarTipo('idioma');">Idiomas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#" id="nav-profissionalizante-tab" data-bs-toggle="tab" data-bs-target="#nav-profissionalizante" type="button" role="tab" aria-controls="nav-profissionalizante" aria-selected="true" onclick="mudarTipo('profissionalizantes');">Profissionalizantes</a>
+                            <a class="nav-link" href="#" id="nav-profissionalizante-tab" data-bs-toggle="tab" data-bs-target="#nav-profissionalizante" type="button" role="tab" aria-controls="nav-profissionalizante" aria-selected="true" onclick="mudarTipo('profissionalizante');">Profissionalizantes</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#" id="nav-outros-tab" data-bs-toggle="tab" data-bs-target="#nav-outros" type="button" role="tab" aria-controls="nav-outros" aria-selected="true" onclick="mudarTipo('outros');">Outros</a>
@@ -34,12 +34,12 @@ require_once __DIR__ . '/components/navbar.php';
                 </nav>
 
                 <div class="tab-content" id="nav-tabContent">
-                    <input type="hidden" id="tipo_instituicao" value="escolas">
+                    <input type="hidden" id="tipo_instituicao" value="escola">
                     <div class="tab-pane fade show active" id="nav-escola" role="tabpanel" aria-labelledby="nav-escola-tab" tabindex="0">
                     </div>
                     <div class="tab-pane fade" id="nav-faculdade" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
                     </div>
-                    <div class="tab-pane fade" id="nav-idiomas" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
+                    <div class="tab-pane fade" id="nav-idioma" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
                     </div>
                     <div class="tab-pane fade" id="nav-profissionalizante" role="tabpanel" aria-labelledby="nav-profissionalizante-tab" tabindex="0">
                     </div>
