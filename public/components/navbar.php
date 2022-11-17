@@ -26,7 +26,7 @@ $HTMLTag = $Logado ? "onclick='abrirPaginaInstituicao();'" : "data-bs-toggle=\"m
                         Contribuir
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#" <?= $HTMLTag; ?>>Adicionar Instituição</a></li>
+                        <li><a class="dropdown-item" href="#" <?= $HTMLTag; ?>><img src="assets/icons/add.svg" width="20" height="20"> Adicionar Instituição</a></li>
                     </ul>
                 </li>
             </div>

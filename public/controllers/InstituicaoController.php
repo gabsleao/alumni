@@ -43,6 +43,7 @@ class InstituicaoController extends AbstractController {
         $this->esta_deletado = 0;
         
         return $this->Modal->criar($this);
+        Utils::sendResponse("INSTITUICAO_CRIADA", 200);
     }
 
     public function editar(){

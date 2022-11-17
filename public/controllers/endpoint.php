@@ -7,6 +7,7 @@ if (!isset($_POST['operacao']) || !isset($_POST['controller'])) {
 
 $AbstractController = new AbstractController($_POST["controller"]);
 
+Log::doLog(var_dump($_POST, 1), "post");
 switch ($_POST["operacao"]) {
     case "registrar_usuario":
         $AbstractController->Controller->nome = $_POST["nome"];
@@ -38,6 +39,24 @@ switch ($_POST["operacao"]) {
         $AbstractController->Controller->recuperarSenha();
         break;
     
+    case 'adicionar_instituicao':
+        $AbstractController->Controller->nome = $_POST["nome"];
+        $AbstractController->Controller->tipo = $_POST["tipo"];
+        $AbstractController->Controller->localizacao = $_POST["estado"];
+        $AbstractController->Controller->informacoes["profile_img_filename"] = $_POST["profile_img_filename"] ?? null;
+        $AbstractController->Controller->informacoes["profile_img_url"] = $_POST["profile_img_url"] ?? null;
+        $AbstractController->Controller->informacoes["cidade"] = $_POST["cidade"];
+        $AbstractController->Controller->informacoes["estado"] = $_POST["estado"];
+        $AbstractController->Controller->informacoes["site"] = $_POST["site"];
+        $AbstractController->Controller->informacoes["telefone"] = $_POST["telefone"];
+        $AbstractController->Controller->informacoes["instituicao_inclusiva"] = $_POST["instituicao_inclusiva"];
+        $AbstractController->Controller->informacoes["modalidade_presencial"] = $_POST["modalidade_presencial"];
+        $AbstractController->Controller->informacoes["modalidade_remoto"] = $_POST["modalidade_remoto"];
+        $AbstractController->Controller->informacoes["endereco"] = $_POST["endereco"];
+        $AbstractController->Controller->iduser_criador = $_SESSION["Session"]->Usuario->iduser;
+        
+        $AbstractController->Controller->criar();
+        break;
     default:
         break;
 }

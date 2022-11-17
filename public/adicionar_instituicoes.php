@@ -179,8 +179,8 @@ if(!$Logado){
                     </div>
                     <div class="col-md-12">
                         <div class="form-floating">
-                            <textarea class="form-control" placeholder="Deixe uma descrição da instituição" id="descricao"></textarea>
-                            <label for="descricao">Descrição</label>
+                            <textarea class="form-control" placeholder="Deixe uma descrição da instituição" id="descricao" minlength="10" maxlength="250" required></textarea>
+                            <label for="descricao">Breve descrição da instituição</label>
                         </div>
                     </div>
 
@@ -210,27 +210,29 @@ if(!$Logado){
                 event.stopPropagation();
             } else {
                 event.preventDefault();
-                registrarUsuario(form);
+                adicionarInstituicao(form);
             }
 
             form.classList.add('was-validated')
         })
     }
 
-    function registrarUsuario(Data) {
+    function adicionarInstituicao(Data) {
         var PostData = {
             "nome": Data.nome.value,
-            // "profile_img_url" : Data.profile_img_url.value,
-            // "profile_img_filename": Data.profile_img_filename.value,
-            "email": Data.email.value,
-            "confirmar_email": Data.confirmar_email.value,
-            "senha": Data.senha.value,
-            "confirmar_senha": Data.confirmar_senha.value,
+            "profile_img_url" : Data.profile_img_url.value,
+            "profile_img_filename": Data.profile_img_filename.value,
+            "endereco": Data.endereco.value,
             "estado": Data.estado.value,
             "cidade": Data.cidade.value,
             "tipo": Data.tipo.value,
-            "operacao": "registrar_usuario",
-            "controller": "UserController",
+            "site": Data.site.value,
+            "telefone": Data.telefone.value,
+            "instituicao_inclusiva": $('#instituicao_inclusiva').is(":checked"),
+            "modalidade_presencial": $('#checkbox_modalidade_presencial').is(":checked"),
+            "modalidade_remoto": $('#checkbox_modalidade_remoto').is(":checked"),
+            "operacao": "adicionar_instituicao",
+            "controller": "InstituicaoController",
         };
 
         $.ajax({
@@ -238,31 +240,26 @@ if(!$Logado){
             url: "./public/controllers/endpoint.php",
             data: PostData,
             success: function(response) {
+                console.log(response);
                 responseJson = JSON.parse(response);
                 if (responseJson.status == 405) {
                     switch (responseJson.mensagem) {
-                        case "USUARIO_JA_EXISTENTE":
-                            showToast("toastUsuarioJaExiste");
-                            shake(document.getElementById("submit_formAdicionarInstituicao"));
-                            $('#modalRegistrar').find('form').removeClass('was-validated');
-                            return;
-                            break;
+                        // case "USUARIO_JA_EXISTENTE":
+                        //     showToast("toastUsuarioJaExiste");
+                        //     shake(document.getElementById("submit_formAdicionarInstituicao"));
+                        //     $('#modalRegistrar').find('form').removeClass('was-validated');
+                        //     return;
+                        //     break;
 
                         default:
                             showToast("toastWhoops");
-                            $('#modalRegistrar').find('form').removeClass('was-validated');
                             return;
                             break;
                     }
                 }
 
-                if (responseJson.status == 200 && responseJson.mensagem == "USUARIO_CRIADO") {
+                if (responseJson.status == 200 && responseJson.mensagem == "INSTITUICAO_CRIADA") {
                     showToast("toastOperacaoConcluida");
-                    $('#modalRegistrar').removeAttr("style");
-                    $('#modalRegistrar').modal('hide');
-                    $('#modalRegistrar').find('form').trigger('reset');
-                    $('#modalRegistrar').find('form').removeClass('was-validated');
-                    $('#modalRegistrar').modal('dispose');
                     return;
                 }
 

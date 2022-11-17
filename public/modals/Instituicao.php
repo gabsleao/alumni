@@ -10,9 +10,10 @@ class Instituicao {
     }
 
     public function criar(InstituicaoController $Data){
-        $Sql = "INSERT INTO " . $this->Tabela . "(nome, localizacao, data_criado, data_modificado, iduser_criador, tipo, esta_deletado, informacoes)
+        $Sql = "INSERT INTO " . $this->Tabela . " (nome, localizacao, data_criado, data_modificado, iduser_criador, tipo, esta_deletado, informacoes)
                 VALUES (:nome, :localizacao, :data_criado, :data_modificado, :iduser_criador, :tipo, :esta_deletado, :informacoes)";
         
+        Log::doLog(var_export($Data, 1), 'Data');
         $Statement = $this->Database->prepare($Sql);
         $Statement->bindValue(":nome", $Data->nome);
 		$Statement->bindValue(":localizacao", $Data->localizacao);
