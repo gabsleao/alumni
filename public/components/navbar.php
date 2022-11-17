@@ -7,6 +7,8 @@ if (isset($_SESSION["Session"]) && strlen($_SESSION["Session"]->Usuario->informa
 $Username = isset($_SESSION["Session"]) ? $_SESSION["Session"]->Usuario->nome : "visitante";
 $Logado = isset($_SESSION["Session"]) ? true : false;
 
+$HTMLTag = $Logado ? "onclick='abrirPaginaInstituicao();'" : "data-bs-toggle=\"modal\" data-bs-target=\"#modalWhoops\"";
+
 ?>
 
 <nav class="bg-light shadow-sm mb-3 rounded">
@@ -24,7 +26,7 @@ $Logado = isset($_SESSION["Session"]) ? true : false;
                         Contribuir
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="./adicionar_instituicoes.php">Adicionar Instituição</a></li>
+                        <li><a class="dropdown-item" href="#" <?= $HTMLTag; ?>>Adicionar Instituição</a></li>
                     </ul>
                 </li>
             </div>
@@ -74,4 +76,8 @@ $Logado = isset($_SESSION["Session"]) ? true : false;
             document.getElementById("userIcon").src = "assets/icons/guest_caret_down.svg";
         });
     });
+
+    function abrirPaginaInstituicao(){
+        window.location.href = "./adicionar_instituicoes.php"
+    }
 </script>
