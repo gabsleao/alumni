@@ -7,7 +7,7 @@ if (!isset($_POST['operacao']) || !isset($_POST['controller'])) {
 
 $AbstractController = new AbstractController($_POST["controller"]);
 
-Log::doLog(var_dump($_POST, 1), "post");
+Log::doLog(var_export($_POST, 1), "post");
 switch ($_POST["operacao"]) {
     case "registrar_usuario":
         $AbstractController->Controller->nome = $_POST["nome"];

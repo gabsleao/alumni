@@ -158,7 +158,6 @@ class UserController extends AbstractController {
         $SessionController = new SessionController();
         $SessionController->Usuario = $this;
         if($SessionController->criar()){
-            Log::doLog("SESSION: " . var_export($_SESSION, 1), "usuarioLogado");
             Utils::sendResponse("USUARIO_LOGADO", 200);
         }
         
