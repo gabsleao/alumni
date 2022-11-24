@@ -42,7 +42,7 @@ class InstituicaoController extends AbstractController {
         $this->data_criado = time();
         $this->esta_deletado = 0;
         
-        return $this->Modal->criar($this);
+        $this->Modal->criar($this);
         Utils::sendResponse("INSTITUICAO_CRIADA", 200);
     }
 

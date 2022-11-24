@@ -22,7 +22,7 @@ class Instituicao {
         $Statement->bindValue(":iduser_criador", $Data->iduser_criador);
         $Statement->bindValue(":tipo", $Data->tipo);
         $Statement->bindValue(":esta_deletado", $Data->esta_deletado);
-		$Statement->bindValue(":informacoes", $Data->informacoes);
+		$Statement->bindValue(":informacoes", json_encode($Data->informacoes));
         $Statement->execute();
 
         return json_encode(["Sucesso" => true, "Resposta" => "Operação para salvar instituição enviada com sucesso!"]);

@@ -53,6 +53,7 @@ switch ($_POST["operacao"]) {
         $AbstractController->Controller->informacoes["modalidade_presencial"] = $_POST["modalidade_presencial"];
         $AbstractController->Controller->informacoes["modalidade_remoto"] = $_POST["modalidade_remoto"];
         $AbstractController->Controller->informacoes["endereco"] = $_POST["endereco"];
+        $AbstractController->Controller->informacoes["descricao"] = $_POST["descricao"];
         $AbstractController->Controller->iduser_criador = $_SESSION["Session"]->Usuario->iduser;
         
         $AbstractController->Controller->criar();

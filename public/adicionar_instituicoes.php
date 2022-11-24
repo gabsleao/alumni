@@ -5,10 +5,12 @@ require_once __DIR__ . '/config/config.php';
 require_once __DIR__ . '/components/load.php';
 require_once __DIR__ . '/components/navbar.php';
 
-if(!$Logado){
-    ?><script>window.location.replace('./index.php');</script><?php
-}
-?>
+if (!$Logado) {
+?><script>
+        window.location.replace('./index.php');
+    </script><?php
+            }
+                ?>
 <div class="container-fluid">
     <div class="row">
         <div class="col-2">
@@ -58,7 +60,7 @@ if(!$Logado){
                         <input type="hidden" class="form-control" id="profile_img_url">
                         <input type="file" class="form-control" id="profile_img_filename" accept="image/*" style="display: none;">
                         <label for="profile_img_filename" class="form-label">
-                            <img src="assets/icons/logo.svg" style="cursor: pointer;" width="80" height="80" id="preview-profile_img_filename"/>
+                            <img src="assets/icons/logo.svg" style="cursor: pointer;" width="80" height="80" id="preview-profile_img_filename" />
                         </label>
                         <div class="valid-feedback">
                             Excelente!
@@ -220,7 +222,7 @@ if(!$Logado){
     function adicionarInstituicao(Data) {
         var PostData = {
             "nome": Data.nome.value,
-            "profile_img_url" : Data.profile_img_url.value,
+            "profile_img_url": Data.profile_img_url.value,
             "profile_img_filename": Data.profile_img_filename.value,
             "endereco": Data.endereco.value,
             "estado": Data.estado.value,
@@ -228,6 +230,7 @@ if(!$Logado){
             "tipo": Data.tipo.value,
             "site": Data.site.value,
             "telefone": Data.telefone.value,
+            "descricao": Data.descricao.value,
             "instituicao_inclusiva": $('#instituicao_inclusiva').is(":checked"),
             "modalidade_presencial": $('#checkbox_modalidade_presencial').is(":checked"),
             "modalidade_remoto": $('#checkbox_modalidade_remoto').is(":checked"),
@@ -260,6 +263,11 @@ if(!$Logado){
 
                 if (responseJson.status == 200 && responseJson.mensagem == "INSTITUICAO_CRIADA") {
                     showToast("toastOperacaoConcluida");
+                    setTimeout(function() {
+                        $('#formAdicionarInstituicao').trigger('reset');
+                        $('#formAdicionarInstituicao').removeClass('was-validated');
+                        window.location.href = "./adicionar_instituicoes.php";
+                    }, 1500);
                     return;
                 }
 
