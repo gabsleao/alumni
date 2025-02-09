@@ -45,8 +45,13 @@ FROM php:8.2-apache
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
 # Copy app files from the app directory.
-COPY ./public /var/www/html
+COPY ./ /var/www/alumni
 
 # Switch to a non-privileged user (defined in the base image) that the app will run under.
 # See https://docs.docker.com/go/dockerfile-user-best-practices/
-USER www-data
+#USER www-data
+
+#ARG USER_ID=1000
+#ARG GROUP_ID=1000
+#RUN groupadd --system --gid ${GROUP_ID} MY_GROUP && \
+#    useradd --system --uid ${USER_ID} --gid MY_GROUP --home /home/MY_USER --shell /sbin/nologin MY_USER
