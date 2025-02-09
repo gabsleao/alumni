@@ -139,7 +139,7 @@ require_once __DIR__ . '/components/navbar.php';
             var URL = encodeURIComponent(JSON.stringify(Data));
 
             setTimeout(function() {
-                window.location.href = "./public/" + pagina + "?json=" + URL;
+                window.location.href = "./" + pagina + "?json=" + URL;
             }, 500);
         }
 
