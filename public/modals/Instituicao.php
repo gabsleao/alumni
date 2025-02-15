@@ -54,7 +54,7 @@ class Instituicao {
         $Sql = "SELECT * FROM " . $this->Tabela . " WHERE esta_deletado = 0";
         $Statement = $this->Database->prepare($Sql);
         $Executado = $Statement->execute();
-		$Resultado = $Statement->fetch(PDO::FETCH_ASSOC);
+		$Resultado = $Statement->fetchAll();
 
         if(!$Resultado){
             $Resultado = [];

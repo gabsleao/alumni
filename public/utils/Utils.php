@@ -32,4 +32,9 @@ class Utils{
         }
         return (object) $Processado;
     }
+
+    static function getTimezone(){
+        //TODO: Implementar timezone por usuário baseado na localização dele
+        return 'America/Sao_Paulo';
+    }
 }
