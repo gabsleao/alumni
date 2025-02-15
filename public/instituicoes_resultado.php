@@ -6,14 +6,13 @@ $Instituicoes = json_decode($InstituicaoController->getAll());
 if (isset($Instituicoes->Sucesso) && $Instituicoes->Sucesso) {
     if (isset($Instituicoes->Resposta) && is_array($Instituicoes->Resposta) && count($Instituicoes->Resposta) > 0) {
 ?>
-        <div class="row row-cols-1 row-cols-md-3 g-4 mt-3 mb-5">
-            <div class="col">
+        <div class="row row-cols-1 row-cols-md-6 g-4 mt-3 mb-5">
                 <?php
                 foreach ($Instituicoes->Resposta as $InstituicaoDestaque) {
                     $OnClickFunction = isset($_SESSION["UsuarioLogado"]) ? "like(this);" : "notAllowed(document);";
-                    var_dump("INSTITUICAO: $InstituicaoDestaque") . '<br>';
                 ?>
-                    <div class="card h-100 ms-4" style="width: 22rem;">
+                <div class="col">
+                    <div class="card h-100 ms-4" style="width: 15rem;">
                         <img src="./assets/imgs/inst-informacao[img]" class="card-img-top" alt="Imagem não encontrada" onerror="this.onerror=null;this.src='./assets/imgs/default.jpg'" />
                         <div class="card-body">
                             <h5 class="card-title">Nome Instituição - localização</h5>
@@ -27,11 +26,10 @@ if (isset($Instituicoes->Sucesso) && $Instituicoes->Sucesso) {
                             <small class="text-muted">Modificado 3 mins ago</small>
                         </div>
                     </div>
+                </div>
                 <?php
                 }
                 ?>
-            </div>
-
         </div>
     <?php
     } else {

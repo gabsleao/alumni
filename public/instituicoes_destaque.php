@@ -5,7 +5,7 @@ $getInstituicoesDestaqueRequest = json_decode($InstituicaoController->getAll());
 if (isset($getInstituicoesDestaqueRequest->Sucesso) && $getInstituicoesDestaqueRequest->Sucesso) {
     if (isset($getInstituicoesDestaqueRequest->Resposta) && is_array($getInstituicoesDestaqueRequest->Resposta) && count($getInstituicoesDestaqueRequest->Resposta) > 0) {
 ?>
-        <div class="row row-cols-1 row-cols-md-3 g-4 mt-3 mb-5">
+        <div class="row row-cols-1 row-cols-md-4 g-4 mt-3 mb-5">
                 <?php
                 foreach ($getInstituicoesDestaqueRequest->Resposta as $InstituicaoDestaque) {
                     if(isset($InstituicaoDestaque->informacoes) && is_string($InstituicaoDestaque->informacoes))
