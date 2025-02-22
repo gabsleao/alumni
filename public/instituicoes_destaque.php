@@ -26,9 +26,9 @@ if (isset($getInstituicoesDestaqueRequest->Sucesso) && $getInstituicoesDestaqueR
                             <?php if(isset($Descricao)){ ?>
                                 <p class="card-text text-truncate"><?= $Descricao; ?></p>
                             <?php } ?>
-                            <a href="#" class="btn btn-primary">ver +</a>
+                            <a class="btn btn-primary" onclick="window.location.href = './ver_instituicao.php?id=' + <?= $InstituicaoDestaque->idinstituicao ?>">ver +</a>
                             <div class="d-flex align-items-end flex-column align-bottom">
-                                <i class="bi bi-heart" style="cursor: pointer;" onclick="<?= (isset($_SESSION["UsuarioLogado"]) ? "like(this);" : "notAllowed(document, " . $InstituicaoDestaque->idinstituicao . ");"); ?>" id="like_id-<?= $InstituicaoDestaque->idinstituicao; ?>"><?= $InstituicaoDestaque->count_curtidas ?? '0'; ?></i>
+                                <i class="bi bi-heart" style="cursor: pointer;" onclick="<?= (isset($_SESSION["Session"]) ? "like(this);" : "notAllowed(document, " . $InstituicaoDestaque->idinstituicao . ");"); ?>" id="like_id-<?= $InstituicaoDestaque->idinstituicao; ?>"><?= $InstituicaoDestaque->count_curtidas ?? '0'; ?></i>
                             </div>
                         </div>
                         <div class="card-footer">
