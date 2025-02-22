@@ -28,7 +28,11 @@ if (isset($getInstituicoesDestaqueRequest->Sucesso) && $getInstituicoesDestaqueR
                             <?php } ?>
                             <a class="btn btn-primary" onclick="window.location.href = './ver_instituicao.php?id=' + <?= $InstituicaoDestaque->idinstituicao ?>">ver +</a>
                             <div class="d-flex align-items-end flex-column align-bottom">
-                                <i class="bi bi-heart" style="cursor: pointer;" onclick="<?= (isset($_SESSION["Session"]) ? "like(this);" : "notAllowed(document, " . $InstituicaoDestaque->idinstituicao . ");"); ?>" id="like_id-<?= $InstituicaoDestaque->idinstituicao; ?>"><?= $InstituicaoDestaque->count_curtidas ?? '0'; ?></i>
+                                <i class="bi <?= (in_array($IDUserGlobal, $InstituicaoDestaque->curtidas) ? 'bi-heart-fill' : 'bi-heart'); ?>" 
+                                    style="cursor: pointer;" 
+                                    onclick="<?= (isset($IDUserGlobal) ? "like(" . $IDUserGlobal . ", " . $InstituicaoDestaque->idinstituicao . ");" : "notAllowed(document, " . $InstituicaoDestaque->idinstituicao . ");"); ?>" 
+                                    id="like_id-<?= $InstituicaoDestaque->idinstituicao; ?>"><?= count($InstituicaoDestaque->curtidas) ?? '0'; ?>
+                                </i>
                             </div>
                         </div>
                         <div class="card-footer">

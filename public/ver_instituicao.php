@@ -24,8 +24,6 @@ if (isset($getInstituicaoRequest->Sucesso) && !$getInstituicaoRequest->Sucesso |
 $Instituicao = $getInstituicaoRequest->Resposta;
 
 if(isset($Instituicao->informacoes) && is_string($Instituicao->informacoes)){
-    var_dump($Instituicao->informacoes);
-    var_dump(json_decode($Instituicao->informacoes));
     $Endereço = json_decode($Instituicao->informacoes)->endereco ?? 'não encontrado ):';
     $Cidade = json_decode($Instituicao->informacoes)->cidade ?? 'não encontrada ):';
     $Site = json_decode($Instituicao->informacoes)->site ?? 'não encontrado ):';
@@ -186,7 +184,11 @@ if(isset($Instituicao->informacoes) && is_string($Instituicao->informacoes)){
                     <div class="modal-footer d-flex justify-content-center">
                         <button class="btn btn-primary me-4">Ver Cursos</button>
                         <button class="btn btn-primary me-4">Adicionar um Comentário</button>
-                        <i class="bi bi-heart ms-4 me-4" style="cursor: pointer;" onclick="<?= (isset($_SESSION["Session"]) ? "like(this);" : "notAllowed(document, " . $Instituicao->idinstituicao . ");"); ?>" id="like_id-<?= $Instituicao->idinstituicao; ?>"></i>
+                        <i class="bi <?= (in_array($IDUserGlobal, $Instituicao->curtidas) ? 'bi-heart-fill' : 'bi-heart'); ?>" 
+                                    style="cursor: pointer;" 
+                                    onclick="<?= (isset($IDUserGlobal) ? "like(" . $IDUserGlobal . ", " . $Instituicao->idinstituicao . ", 0);" : "notAllowed(document, " . $Instituicao->idinstituicao . ");"); ?>" 
+                                    id="like_id-<?= $Instituicao->idinstituicao; ?>">
+                                </i>
                         <button form="formEditarInstituicao" class="btn me-4 mr-4" id="submit_formEditarInstituicao">Editar</button>
                         <button type="button" class="btn btn-secondary me-4 mr-4" data-bs-dismiss="modal" hidden>Cancelar</button>
                         <button type="submit" form="formAdicionarInstituicao" class="btn btn-primary me-4 mr-4" id="submit_formAdicionarInstituicao" hidden>Salvar</button>

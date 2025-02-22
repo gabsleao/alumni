@@ -110,8 +110,53 @@ var shake = function (element, magnitude = 16, angular = false) {
 
 };
 
-function like(Data) {
-  alert("LIKADO!");
+function like(iduser, idinstituicao, mudarCountUI = 1) {
+    var PostData = {
+      "iduser": iduser,
+      "idinstituicao": idinstituicao,
+      "operacao": "curtir_instituicao",
+      "controller": "CurtidasController",
+  };
+
+  $.ajax({
+      type: "POST",
+      url: "./public/controllers/endpoint.php",
+      data: PostData,
+      success: function(response) {
+          console.log(response);
+          responseJson = JSON.parse(response);
+          if (responseJson.status == 200 && responseJson.mensagem == "CURTIDO") {
+              showToast("toastOperacaoConcluida");
+
+              if(mudarCountUI){
+                $('#like_id-' + idinstituicao).html(function(i, oldCount) {
+                    return ++oldCount;
+                });
+              }
+
+              $('#like_id-' + idinstituicao).addClass('bi-heart-fill');
+              $('#like_id-' + idinstituicao).removeClass('bi-heart');
+              return;
+          }else if(responseJson.status == 200 && responseJson.mensagem == "DESCURTIDO"){
+            showToast("toastOperacaoConcluida");
+
+              if(mudarCountUI){
+                $('#like_id-' + idinstituicao).html(function(i, oldCount) {
+                    return --oldCount;
+                });
+              }
+
+              $('#like_id-' + idinstituicao).addClass('bi-heart');
+              $('#like_id-' + idinstituicao).removeClass('bi-heart-fill');
+              return;
+          }
+
+          showToast("toastWhoops");
+      },
+      error: function(response) {
+          showToast("toastWhoops");
+      }
+  });
 }
 
 function notAllowed(document, like_id) {

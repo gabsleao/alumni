@@ -6,6 +6,7 @@ if (isset($_SESSION["Session"]) && strlen($_SESSION["Session"]->Usuario->informa
 
 $Username = isset($_SESSION["Session"]) ? $_SESSION["Session"]->Usuario->nome : "visitante";
 $Logado = isset($_SESSION["Session"]) ? true : false;
+$IDUserGlobal = isset($_SESSION["Session"]->Usuario->iduser) ? $_SESSION["Session"]->Usuario->iduser : null;
 
 $HTMLTag = $Logado ? "onclick='abrirPaginaInstituicao();'" : "data-bs-toggle=\"modal\" data-bs-target=\"#modalWhoops\"";
 

@@ -37,6 +37,9 @@ class Instituicao {
     }
 
     public function get($IDInstituicao){
+        if(empty($IDInstituicao))
+            return json_encode(["Sucesso" => false, "Resposta" => []]);
+
         $Sql = "SELECT * FROM " . $this->Tabela . " WHERE esta_deletado = 0 AND idinstituicao = :idinstituicao";
         $Statement = $this->Database->prepare($Sql);
         $Statement->bindValue(":idinstituicao", $IDInstituicao);
@@ -46,6 +49,8 @@ class Instituicao {
         if(!$Resultado){
             $Resultado = [];
         }
+        
+        $Resultado['curtidas'] = (new Curtidas())->getCurtidas($IDInstituicao);
         
         return json_encode(["Sucesso" => $Executado, "Resposta" => $Resultado]);
     }
@@ -59,7 +64,13 @@ class Instituicao {
         if(!$Resultado){
             $Resultado = [];
         }
+
+        $Curtidas = new Curtidas();
+        foreach($Resultado as $Key => $Instituicao){
+            $Resultado[$Key]['curtidas'] = $Curtidas->getCurtidas($Instituicao['idinstituicao']);
+        }
         
+        // var_dump($Resultado);
         return json_encode(["Sucesso" => $Executado, "Resposta" => $Resultado]);
     }
 

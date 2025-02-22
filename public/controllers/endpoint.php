@@ -58,6 +58,12 @@ switch ($_POST["operacao"]) {
         
         $AbstractController->Controller->criar();
         break;
+
+    case 'curtir_instituicao':
+        $AbstractController->Controller->iduser = $_POST["iduser"];
+        $AbstractController->Controller->idinstituicao = $_POST["idinstituicao"];
+        $AbstractController->Controller->criar();
+        break;
     default:
         break;
 }
