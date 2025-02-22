@@ -1,6 +1,6 @@
 <?php
 $InstituicaoController = new AbstractController("InstituicaoController");
-$getInstituicoesDestaqueRequest = json_decode($InstituicaoController->getAll());
+$getInstituicoesDestaqueRequest = json_decode($InstituicaoController->Controller->getAllDestaque());
 
 if (isset($getInstituicoesDestaqueRequest->Sucesso) && $getInstituicoesDestaqueRequest->Sucesso) {
     if (isset($getInstituicoesDestaqueRequest->Resposta) && is_array($getInstituicoesDestaqueRequest->Resposta) && count($getInstituicoesDestaqueRequest->Resposta) > 0) {

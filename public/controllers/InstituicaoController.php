@@ -74,4 +74,8 @@ class InstituicaoController extends AbstractController {
 
         return $this->Modal->getAllWithFilter($Filter);
     }
+
+    public function getAllDestaque(){
+        return $this->Modal->getAllDestaque();
+    }
 }

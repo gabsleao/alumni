@@ -8,7 +8,7 @@ $Instituicoes = json_decode($InstituicaoController->getAllWithFilter($Filter));
 if (isset($Instituicoes->Sucesso) && $Instituicoes->Sucesso) {
     if (isset($Instituicoes->Resposta) && is_array($Instituicoes->Resposta) && count($Instituicoes->Resposta) > 0) {
 ?>
-        <div class="row row-cols-1 row-cols-md-6 g-4 mt-3 mb-5">
+        <div class="row row-cols-1 row-cols-md-5 g-4 mt-3 mb-5">
                 <?php
                 foreach ($Instituicoes->Resposta as $InstituicaoDestaque) {
                     if(isset($InstituicaoDestaque->informacoes) && is_string($InstituicaoDestaque->informacoes))
@@ -22,7 +22,7 @@ if (isset($Instituicoes->Sucesso) && $Instituicoes->Sucesso) {
                     }   
                 ?>
                 <div class="col">
-                    <div class="card h-100 ms-4" style="width: 15rem;">
+                    <div class="card h-100 ms-4" style="width: 16rem;">
                         <img src="./assets/imgs/inst-informacao[img]" class="card-img-top" alt="Imagem não encontrada" onerror="this.onerror=null;this.src='./assets/imgs/default.jpg'" />
                         <div class="card-body">
                             <h5 class="card-title"><?= $InstituicaoDestaque->nome ?? 'Desconhecido'; ?></h5>
@@ -31,7 +31,11 @@ if (isset($Instituicoes->Sucesso) && $Instituicoes->Sucesso) {
                             <?php } ?>
                             <a href="#" class="btn btn-primary">ver +</a>
                             <div class="d-flex align-items-end flex-column align-bottom">
-                            <i class="bi bi-heart" style="cursor: pointer;" onclick="<?= (isset($IDUserGlobal) ? "like(" . $IDUserGlobal . ", " . $InstituicaoDestaque->idinstituicao . ");" : "notAllowed(document, " . $InstituicaoDestaque->idinstituicao . ");"); ?>" id="like_id-<?= $InstituicaoDestaque->idinstituicao; ?>"><?= $InstituicaoDestaque->count_curtidas ?? '0'; ?></i>
+                            <i class="bi <?= (in_array($IDUserGlobal, $InstituicaoDestaque->curtidas) ? 'bi-heart-fill' : 'bi-heart'); ?>" 
+                                    style="cursor: pointer;" 
+                                    onclick="<?= (isset($IDUserGlobal) ? "like(" . $IDUserGlobal . ", " . $InstituicaoDestaque->idinstituicao . ");" : "notAllowed(document, " . $InstituicaoDestaque->idinstituicao . ");"); ?>" 
+                                    id="like_id-<?= $InstituicaoDestaque->idinstituicao; ?>"><?= count($InstituicaoDestaque->curtidas) ?? '0'; ?>
+                                </i>
                             </div>
                         </div>
                         <div class="card-footer">

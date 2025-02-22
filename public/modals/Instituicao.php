@@ -70,7 +70,7 @@ class Instituicao {
             $Resultado[$Key]['curtidas'] = $Curtidas->getCurtidas($Instituicao['idinstituicao']);
         }
         
-        // var_dump($Resultado);
+        shuffle($Resultado);
         return json_encode(["Sucesso" => $Executado, "Resposta" => $Resultado]);
     }
 
@@ -106,7 +106,39 @@ class Instituicao {
 		$Resultado = $Statement->fetchAll();
 
         if(!$Resultado){
-            $Resultado = [];
+            return [];
+        }
+
+        $Curtidas = new Curtidas();
+        foreach($Resultado as $Key => $Instituicao){
+            $Resultado[$Key]['curtidas'] = $Curtidas->getCurtidas($Instituicao['idinstituicao']);
+        }
+
+        shuffle($Resultado);
+        return json_encode(["Sucesso" => $Executado, "Resposta" => $Resultado]);
+    }
+
+    public function getAllDestaque(){
+        $Sql = "SELECT *, COUNT(c.iduser) as num_curtidas FROM " . $this->Tabela . " t
+                INNER JOIN usuarios_instituicoes_curtidas c ON c.idinstituicao = t.idinstituicao
+                AND t.esta_deletado = 0
+                AND c.esta_ativo = 1
+                AND (c.data_criado >= :last24h OR c.data_modificado >= :last24h)
+                GROUP BY t.idinstituicao
+                ORDER BY num_curtidas DESC
+                LIMIT 4";
+        $Statement = $this->Database->prepare($Sql);
+        $Statement->bindValue(":last24h", time() - 86400);
+        $Executado = $Statement->execute();
+		$Resultado = $Statement->fetchAll();
+
+        if(!$Resultado){
+            return [];
+        }
+
+        $Curtidas = new Curtidas();
+        foreach($Resultado as $Key => $Instituicao){
+            $Resultado[$Key]['curtidas'] = $Curtidas->getCurtidas($Instituicao['idinstituicao']);
         }
 
         return json_encode(["Sucesso" => $Executado, "Resposta" => $Resultado]);

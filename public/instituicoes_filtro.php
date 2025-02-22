@@ -84,7 +84,7 @@ $Parametros = Utils::processarGet($_GET["json"] ?? []);
                     </ul>
                     <ul class="list-group mb-3">
                         <div class="col-sm-12">
-                            Valor por mês<br>
+                            Valor máximo por mês<br>
                             0 <input type="range" class="form-check-range" id="valor" min="0" max="5000" step="100" value="500" oninput="this.nextElementSibling.value = this.value">
                             R$<output><?= $Parametros->valor; ?></output>
                         </div>

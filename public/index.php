@@ -95,6 +95,7 @@ require_once __DIR__ . '/components/navbar.php';
                     <div class="col-4">
                         <label for="valor" class="form-label">Valor</label>
                         <input type="range" class="form-range" id="valor" min="0" max="5000" step="100" value="500" oninput="this.nextElementSibling.value = this.value">Até R$<output>500</output>,00 /mês
+                        <button class="btn btn-link" type="button" data-bs-toggle="modal" data-bs-target="#modalInformativoValor"><img src="assets/icons/informativo.svg" width="20" height="20"></button>
                     </div>
                     <div class="col-2 ms-5">
                         <div class="form-check form-switch float-start">
@@ -146,7 +147,33 @@ require_once __DIR__ . '/components/navbar.php';
         function mudarTipo(tipo) {
             document.getElementById("tipo_instituicao").value = tipo;
         }
+
+        function verInstituicoes(){
+            var pagina = $('#formBuscarMain').attr('action');
+            showToast("toastOperacaoConcluida");
+
+            var Data = {
+                "tipo": ['escola', 'faculdade', 'idioma', 'profissionalizante', 'outros'],
+                "modalidade_presencial": 1,
+                "modalidade_remoto": 1,
+                "valor": 5000
+            };
+
+            var URL = encodeURIComponent(JSON.stringify(Data));
+
+            window.location.href = "./" + pagina + "?json=" + URL;
+        }
     </script>
+
+    <div class="row mt-3 mb-5">
+        <div class="col-4"></div>
+        <div class="col-4 d-flex justify-content-center">
+            <button type="button" class="btn btn-secondary" onClick="verInstituicoes();">Ver todas</button>
+        </div>
+
+        <div class="col-4"></div>
+    </div>
+    
     <?php
     require_once __DIR__ . "/instituicoes_destaque.php";
     ?>
