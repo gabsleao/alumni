@@ -35,13 +35,26 @@ if(isset($Instituicao->informacoes) && is_string($Instituicao->informacoes)){
 }
 
 ?>
+
+<style>
+.scrollable-list {
+    max-height: 320px;
+    overflow-y: auto;
+}
+</style>
+
 <div class="container-fluid">
     <div class="row">
-        <div class="col-10">
+        <div class="col-12">
             <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-light rounded">
                 <form class="row g-3 needs-validation mt-3 mb-3 me-2 form-switch" novalidate id="formAdicionarInstituicao">
                     <div class="col-md-9">
                         <label for="nome" class="form-label">Nome da Instituição</label>
+                        <i class="ms-4 bi <?= (in_array($IDUserGlobal, $Instituicao->curtidas) ? 'bi-heart-fill' : 'bi-heart'); ?>" 
+                                    style="cursor: pointer;" 
+                                    onclick="<?= (isset($IDUserGlobal) ? "like(" . $IDUserGlobal . ", " . $Instituicao->idinstituicao . ", 0);" : "notAllowed(document, " . $Instituicao->idinstituicao . ");"); ?>" 
+                                    id="like_id-<?= $Instituicao->idinstituicao; ?>">
+                        </i>
                         <input type="text" class="form-control" id="nome" required minlength="3" maxlength="100" value="<?= $Instituicao->nome; ?>" disabled>
                         <div class="valid-feedback">
                             Excelente!
@@ -184,29 +197,68 @@ if(isset($Instituicao->informacoes) && is_string($Instituicao->informacoes)){
                     <div class="modal-footer d-flex justify-content-center">
                         <button class="btn btn-primary me-4">Ver Cursos</button>
                         <button class="btn btn-primary me-4">Adicionar um Comentário</button>
-                        <i class="bi <?= (in_array($IDUserGlobal, $Instituicao->curtidas) ? 'bi-heart-fill' : 'bi-heart'); ?>" 
-                                    style="cursor: pointer;" 
-                                    onclick="<?= (isset($IDUserGlobal) ? "like(" . $IDUserGlobal . ", " . $Instituicao->idinstituicao . ", 0);" : "notAllowed(document, " . $Instituicao->idinstituicao . ");"); ?>" 
-                                    id="like_id-<?= $Instituicao->idinstituicao; ?>">
-                                </i>
-                        <button form="formEditarInstituicao" class="btn me-4 mr-4" id="submit_formEditarInstituicao">Editar</button>
+                        <button form="formEditarInstituicao" class="btn me-4 mr-4" id="submit_formEditarInstituicao">Editar Instituição</button>
                         <button type="button" class="btn btn-secondary me-4 mr-4" data-bs-dismiss="modal" hidden>Cancelar</button>
                         <button type="submit" form="formAdicionarInstituicao" class="btn btn-primary me-4 mr-4" id="submit_formAdicionarInstituicao" hidden>Salvar</button>
                     </div>
                 </form>
             </div>
         </div>
-        <div class="col-2">
-            <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-light rounded">
-                LISTA DE LIKES
-            </div>
-        </div>
     </div>
 
     <div class="row mt-4">
         <div class="col-12">
-            <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-light rounded">
+        <div class="list-group scrollable-list">
+            <div class="list-group-item d-flex align-items-start" style="border: none;">
+                <img src="assets/icons/guest_caret_down.svg" class="rounded-circle me-3" alt="Foto do usuário" width="50" height="50">
+                <div>
+                    <h6 class="mb-1">João Silva</h6>
+                    <p class="mb-1">Este é um comentário de exemplo para mostrar como o layout funciona.</p>
+                    <small class="text-muted">Postado há 2 horas</small>
+                </div>
             </div>
+            <hr class="my-1"/>
+            
+            <div class="list-group-item d-flex align-items-start" style="border: none;">
+            <img src="assets/icons/guest_caret_down.svg" class="rounded-circle me-3" alt="Foto do usuário" width="50" height="50">
+                <div>
+                    <h6 class="mb-1">Maria Oliveira</h6>
+                    <p class="mb-1">Ótima escola! Gostei bastante do conteúdo.</p>
+                    <small class="text-muted">Postado há 5 horas</small>
+                </div>
+            </div>
+            <hr class="my-1"/>
+
+            <div class="list-group-item d-flex align-items-start" style="border: none;">
+            <img src="assets/icons/guest_caret_down.svg" class="rounded-circle me-3" alt="Foto do usuário" width="50" height="50">
+                <div>
+                    <h6 class="mb-1">Carlos Santos</h6>
+                    <p class="mb-1">Muito interessante, bons professores.</p>
+                    <small class="text-muted">Postado ontem</small>
+                </div>
+            </div>
+            <hr class="my-1"/>
+
+            <div class="list-group-item d-flex align-items-start" style="border: none;">
+            <img src="assets/icons/guest_caret_down.svg" class="rounded-circle me-3" alt="Foto do usuário" width="50" height="50">
+                <div>
+                    <h6 class="mb-1">Carlos Santos</h6>
+                    <p class="mb-1">Muito interessante, bons professores.</p>
+                    <small class="text-muted">Postado ontem</small>
+                </div>
+            </div>
+            <hr class="my-1"/>
+
+            <div class="list-group-item d-flex align-items-start" style="border: none;">
+            <img src="assets/icons/guest_caret_down.svg" class="rounded-circle me-3" alt="Foto do usuário" width="50" height="50">
+                <div>
+                    <h6 class="mb-1">Carlos Santos</h6>
+                    <p class="mb-1">Muito interessante, bons professores.</p>
+                    <small class="text-muted">Postado ontem</small>
+                </div>
+            </div>
+            <hr class="my-1"/>
+        </div>
         </div>
     </div>
 </div>
