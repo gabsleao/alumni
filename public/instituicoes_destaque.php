@@ -28,7 +28,7 @@ if (isset($getInstituicoesDestaqueRequest->Sucesso) && $getInstituicoesDestaqueR
                             <?php } ?>
                             <a href="#" class="btn btn-primary">ver +</a>
                             <div class="d-flex align-items-end flex-column align-bottom">
-                                <i class="bi bi-heart" style="cursor: pointer;" onclick="<?php (isset($_SESSION["UsuarioLogado"]) ? "like(this);" : "notAllowed(document);"); ?>" id="like_id-<?= 1 ?>"></i>
+                                <i class="bi bi-heart" style="cursor: pointer;" onclick="<?= (isset($_SESSION["UsuarioLogado"]) ? "like(this);" : "notAllowed(document, " . $InstituicaoDestaque->idinstituicao . ");"); ?>" id="like_id-<?= $InstituicaoDestaque->idinstituicao; ?>"><?= $InstituicaoDestaque->count_curtidas ?? '0'; ?></i>
                             </div>
                         </div>
                         <div class="card-footer">
