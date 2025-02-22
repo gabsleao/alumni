@@ -1,7 +1,9 @@
 <?php
 $InstituicaoController = new AbstractController("InstituicaoController");
 
-$Instituicoes = json_decode($InstituicaoController->getAll());
+$Filter = (array) $Parametros ?? [];
+
+$Instituicoes = json_decode($InstituicaoController->getAllWithFilter($Filter));
 
 if (isset($Instituicoes->Sucesso) && $Instituicoes->Sucesso) {
     if (isset($Instituicoes->Resposta) && is_array($Instituicoes->Resposta) && count($Instituicoes->Resposta) > 0) {

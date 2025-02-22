@@ -128,7 +128,7 @@ require_once __DIR__ . '/components/navbar.php';
             event.preventDefault();
 
             var Data = {
-                "tipo": document.getElementById("tipo_instituicao").value,
+                "tipo": [document.getElementById("tipo_instituicao").value],
                 "nome": this.nome.value,
                 "localizacao": this.localizacao.value,
                 "valor": this.valor.value,

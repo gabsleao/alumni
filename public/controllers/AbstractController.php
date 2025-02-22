@@ -31,4 +31,8 @@ class AbstractController {
     public function getAll(){
         return $this->Controller->getAll();
     }
+
+    public function getAllWithFilter($Filter = []){
+        return $this->Controller->getAllWithFilter($Filter);
+    }
 }

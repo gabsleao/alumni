@@ -62,4 +62,42 @@ class Instituicao {
         
         return json_encode(["Sucesso" => $Executado, "Resposta" => $Resultado]);
     }
+
+    public function getAllWithFilter($Filter = []){
+        if(empty($Filter))
+            return $this->getAll();
+
+        $Sql = "SELECT * FROM " . $this->Tabela . " WHERE esta_deletado = 0";
+
+        if(!empty($Filter['nome']))
+            $Sql .= " AND nome LIKE :nome";
+
+        if(!empty($Filter['tipo']))
+            $Sql .= " AND tipo IN ('" . implode("', '", $Filter['tipo']) . "')";
+
+        if(!empty($Filter['localizacao']))
+            $Sql .= " AND localizacao LIKE :localizacao";
+
+        // if(!empty($Filter['valor']))
+        //     $Sql .= ' AND valor <= :valor';
+
+        // if(!empty($Filter['instituicao_inclusiva']))
+        //     $Sql .= ' AND instituicao_inclusiva = :instituicao_inclusiva';
+        
+        $Statement = $this->Database->prepare($Sql);
+        if(!empty($Filter['nome']))
+            $Statement->bindValue(":nome", "%" . $Filter['nome'] . "%");
+        
+        if(!empty($Filter['localizacao']))
+            $Statement->bindValue(":localizacao", "%" . $Filter['localizacao'] . "%");
+        
+        $Executado = $Statement->execute();
+		$Resultado = $Statement->fetchAll();
+
+        if(!$Resultado){
+            $Resultado = [];
+        }
+
+        return json_encode(["Sucesso" => $Executado, "Resposta" => $Resultado]);
+    }
 }

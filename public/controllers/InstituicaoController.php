@@ -61,4 +61,17 @@ class InstituicaoController extends AbstractController {
     public function getAll(){
         return $this->Modal->getAll();
     }
+
+    public function getAllWithFilter($Filter = []){
+        if(isset($Filter['localizacao']) && $Filter['localizacao'] == 'XX')
+            unset($Filter['localizacao']);
+
+        if(isset($Filter['valor']) && $Filter['valor'] >= '5000')
+            unset($Filter['valor']);
+
+        if(isset($Filter['tipo']) && !is_array($Filter['tipo']))
+            $Filter['tipo'] = explode(",", $Filter['tipo']);
+
+        return $this->Modal->getAllWithFilter($Filter);
+    }
 }

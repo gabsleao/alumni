@@ -13,7 +13,7 @@ class Utils{
 
     static function processarGet($GET){
         $Processado = [
-                        "tipo" => "escolas", 
+                        "tipo" => ["escolas"], 
                         "nome" => "", 
                         "localizacao" => "XX", 
                         "valor" => 500, 
