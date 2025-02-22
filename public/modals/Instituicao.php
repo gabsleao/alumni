@@ -47,7 +47,7 @@ class Instituicao {
 		$Resultado = $Statement->fetch(PDO::FETCH_ASSOC);
 
         if(!$Resultado){
-            $Resultado = [];
+            return json_encode(["Sucesso" => $Executado, "Resposta" => []]);
         }
         
         $Resultado['curtidas'] = (new Curtidas())->getCurtidas($IDInstituicao);
@@ -62,7 +62,7 @@ class Instituicao {
 		$Resultado = $Statement->fetchAll();
 
         if(!$Resultado){
-            $Resultado = [];
+            return json_encode(["Sucesso" => $Executado, "Resposta" => []]);
         }
 
         $Curtidas = new Curtidas();
@@ -106,7 +106,7 @@ class Instituicao {
 		$Resultado = $Statement->fetchAll();
 
         if(!$Resultado){
-            return [];
+            return json_encode(["Sucesso" => $Executado, "Resposta" => []]);
         }
 
         $Curtidas = new Curtidas();
@@ -133,7 +133,7 @@ class Instituicao {
 		$Resultado = $Statement->fetchAll();
 
         if(!$Resultado){
-            return [];
+            return json_encode(["Sucesso" => $Executado, "Resposta" => []]);
         }
 
         $Curtidas = new Curtidas();
