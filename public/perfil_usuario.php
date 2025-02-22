@@ -6,6 +6,8 @@ require_once __DIR__ . '/components/load.php';
 require_once __DIR__ . '/components/navbar.php';
 
 //var_dump($_SESSION);
+$CurtidasController = new AbstractController('CurtidasController');
+$CurtidasUser = json_decode($CurtidasController->getAllWithFilter(['iduser' => $IDUserGlobal]));
 
 ?>
 
@@ -53,26 +55,39 @@ require_once __DIR__ . '/components/navbar.php';
           <div class="col-md-12 mb-4">
             <div class="card mb-4 mb-md-0">
               <div class="card-body">
-                <p class="mb-4">Acessado recentemente</p>
-                <li class="d-flex justify-content-between align-items-center">
-                  <p class="mb-1">Nome da Instituição</p>Acessado em:<?= "data"; ?>
-                </li>
+                <p class="mb-4">Favoritados</p>
+                <?php
+                  $CurtidasInteresse = [
+                      'escola' => 0,
+                      'faculdade' => 0,
+                      'idioma' => 0,
+                      'profissionalizante' => 0,
+                      'outros' => 0
+                  ];
+                  $TotalCurtidas = 0;
+                  if(!empty($CurtidasUser->Resposta)){
+                    foreach($CurtidasUser->Resposta as $Curtidas){
+                      $InstituicaoController = new AbstractController('InstituicaoController');
+                      $InstituicaoController->Controller->idinstituicao = $Curtidas->idinstituicao;
+                      $Instituicao = json_decode($InstituicaoController->get());
+                      $TotalCurtidas++;
+                      
+                      $Nome = $Instituicao->Resposta->nome ?? 'Não encontrado';
+                      $DateTime = new DateTime("now", new DateTimeZone(Utils::getTimezone())); 
+                      $DateTime->setTimestamp($Curtidas->data_modificado ?? $Curtidas->data_criado);
+                      $Modificado = $DateTime->format('d/m/Y H:i:s');
+                      
+                      echo '<li class="d-flex justify-content-between align-items-center">
+                              <p class="mb-1"><a href="#" onclick="window.location.href = \'./ver_instituicao.php?id=' . $Instituicao->Resposta->idinstituicao .'\'">' . $Nome . '</a></p>' . ($Modificado ?? '') . '
+                            </li>';
 
-                <li class="d-flex justify-content-between align-items-center">
-                  <p class="mb-1">Nome da Instituição</p>Acessado em:<?= "data"; ?>
-                </li>
-
-                <li class="d-flex justify-content-between align-items-center">
-                  <p class="mb-1">Nome da Instituição</p>Acessado em:<?= "data"; ?>
-                </li>
-
-                <li class="d-flex justify-content-between align-items-center">
-                  <p class="mb-1">Nome da Instituição</p>Acessado em:<?= "data"; ?>
-                </li>
-
-                <li class="d-flex justify-content-between align-items-center">
-                  <p class="mb-1">Nome da Instituição</p>Acessado em:<?= "data"; ?>
-                </li>                
+                      if(isset($CurtidasInteresse[$Instituicao->Resposta->tipo]))
+                        $CurtidasInteresse[$Instituicao->Resposta->tipo]++;
+                    }
+                  }else{
+                    echo 'Nada encontrado';
+                  }
+                ?>             
               </div>
             </div>
           </div>
@@ -83,28 +98,28 @@ require_once __DIR__ . '/components/navbar.php';
                 </p>
                 <p class="mb-1" style="font-size: .77rem;">Escolas</p>
                 <div class="progress rounded" style="height: 5px;">
-                  <div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="80"
-                    aria-valuemin="0" aria-valuemax="100"></div>
+                  <div class="progress-bar" role="progressbar" style="width: <?= ($CurtidasInteresse['escola'] / $TotalCurtidas) * 100 ?>%" aria-valuenow="<?= $CurtidasInteresse['escola']; ?>"
+                    aria-valuemin="0" aria-valuemax="<?= $TotalCurtidas ?>"></div>
                 </div>
                 <p class="mt-4 mb-1" style="font-size: .77rem;">Faculdades</p>
                 <div class="progress rounded" style="height: 5px;">
-                  <div class="progress-bar" role="progressbar" style="width: 72%" aria-valuenow="72"
-                    aria-valuemin="0" aria-valuemax="100"></div>
+                  <div class="progress-bar" role="progressbar" style="width: <?= ($CurtidasInteresse['faculdade'] / $TotalCurtidas) * 100 ?>%" aria-valuenow="<?= $CurtidasInteresse['faculdade']; ?>"
+                    aria-valuemin="0" aria-valuemax="<?= $TotalCurtidas ?>"></div>
                 </div>
                 <p class="mt-4 mb-1" style="font-size: .77rem;">Idiomas</p>
                 <div class="progress rounded" style="height: 5px;">
-                  <div class="progress-bar" role="progressbar" style="width: 89%" aria-valuenow="89"
-                    aria-valuemin="0" aria-valuemax="100"></div>
+                  <div class="progress-bar" role="progressbar" style="width: <?= ($CurtidasInteresse['idioma'] / $TotalCurtidas) * 100 ?>%" aria-valuenow="<?= $CurtidasInteresse['idioma']; ?>"
+                    aria-valuemin="0" aria-valuemax="<?= $TotalCurtidas ?>"></div>
                 </div>
                 <p class="mt-4 mb-1" style="font-size: .77rem;">Profissionalizantes</p>
                 <div class="progress rounded" style="height: 5px;">
-                  <div class="progress-bar" role="progressbar" style="width: 55%" aria-valuenow="55"
-                    aria-valuemin="0" aria-valuemax="100"></div>
+                  <div class="progress-bar" role="progressbar" style="width: <?= ($CurtidasInteresse['profissionalizante'] / $TotalCurtidas) * 100 ?>%" aria-valuenow="<?= $CurtidasInteresse['profissionalizante']; ?>"
+                    aria-valuemin="0" aria-valuemax="<?= $TotalCurtidas ?>"></div>
                 </div>
                 <p class="mt-4 mb-1" style="font-size: .77rem;">Outros</p>
                 <div class="progress rounded mb-2" style="height: 5px;">
-                  <div class="progress-bar" role="progressbar" style="width: 66%" aria-valuenow="66"
-                    aria-valuemin="0" aria-valuemax="100"></div>
+                  <div class="progress-bar" role="progressbar" style="width: <?= ($CurtidasInteresse['outros'] / $TotalCurtidas) * 100 ?>%" aria-valuenow="<?= $CurtidasInteresse['outros']; ?>"
+                    aria-valuemin="0" aria-valuemax="<?= $TotalCurtidas ?>"></div>
                 </div>
               </div>
             </div>

@@ -66,8 +66,6 @@ class Curtidas {
     }
 
     public function getAll(){
-        return json_encode(["Sucesso" => true, "Resposta" => "Operação getAll ainda a ser implementada"]);
-
         $Sql = "SELECT * FROM " . $this->Tabela . " WHERE esta_ativo = 0";
         $Statement = $this->Database->prepare($Sql);
         $Executado = $Statement->execute();
@@ -118,5 +116,28 @@ class Curtidas {
         
         
         return $Statement->rowCount() > 0 ? true : false;
+    }
+
+    public function getAllWithFilter($Filter = []){
+        if(empty($Filter))
+            return $this->getAll();
+
+        $Sql = "SELECT idinstituicao, data_criado, data_modificado FROM " . $this->Tabela . " WHERE esta_ativo = 1";
+
+        if(!empty($Filter['iduser']))
+            $Sql .= " AND iduser = :iduser";
+        
+        $Statement = $this->Database->prepare($Sql);
+        if(!empty($Filter['iduser']))
+            $Statement->bindValue(":iduser", $Filter['iduser']);
+        
+        $Executado = $Statement->execute();
+		$Resultado = $Statement->fetchAll();
+
+        if(!$Resultado){
+            return json_encode(["Sucesso" => $Executado, "Resposta" => []]);
+        }
+
+        return json_encode(["Sucesso" => $Executado, "Resposta" => $Resultado]);
     }
 }

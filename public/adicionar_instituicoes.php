@@ -156,8 +156,8 @@ if (!$Logado) {
                     </div>
                     <div class="col-md-12">
                         <div class="form-floating">
-                            <textarea class="form-control" placeholder="Deixe uma descrição da instituição" id="descricao" minlength="10" maxlength="250" required></textarea>
-                            <label for="descricao">Breve descrição da instituição</label>
+                            <textarea class="form-control" placeholder="Deixe uma descrição da instituição" id="descricao" minlength="10" required></textarea>
+                            <label for="descricao">Descrição da instituição</label>
                         </div>
                     </div>
 

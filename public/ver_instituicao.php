@@ -189,13 +189,12 @@ if(isset($Instituicao->informacoes) && is_string($Instituicao->informacoes)){
                     </div>
                     <div class="col-md-12">
                         <div class="form-floating">
-                            <textarea class="form-control" placeholder="Deixe uma descrição da instituição" id="descricao" minlength="10" maxlength="250" required disabled><?= $Descrição; ?></textarea>
-                            <label for="descricao">Breve descrição da instituição</label>
+                            <textarea class="form-control" placeholder="Deixe uma descrição da instituição" id="descricao" minlength="10" maxlength="250" required disabled style="height: 215px;"><?= $Descrição; ?></textarea>
+                            <label for="descricao">Descrição da instituição</label>
                         </div>
                     </div>
 
                     <div class="modal-footer d-flex justify-content-center">
-                        <button class="btn btn-primary me-4">Ver Cursos</button>
                         <button class="btn btn-primary me-4">Adicionar um Comentário</button>
                         <button form="formEditarInstituicao" class="btn me-4 mr-4" id="submit_formEditarInstituicao">Editar Instituição</button>
                         <button type="button" class="btn btn-secondary me-4 mr-4" data-bs-dismiss="modal" hidden>Cancelar</button>
@@ -213,7 +212,7 @@ if(isset($Instituicao->informacoes) && is_string($Instituicao->informacoes)){
                 <img src="assets/icons/guest_caret_down.svg" class="rounded-circle me-3" alt="Foto do usuário" width="50" height="50">
                 <div>
                     <h6 class="mb-1">João Silva</h6>
-                    <p class="mb-1">Este é um comentário de exemplo para mostrar como o layout funciona.</p>
+                    <p class="mb-1">Já fui aluno! Muito boa instituição.</p>
                     <small class="text-muted">Postado há 2 horas</small>
                 </div>
             </div>

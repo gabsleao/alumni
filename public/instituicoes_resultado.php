@@ -29,7 +29,7 @@ if (isset($Instituicoes->Sucesso) && $Instituicoes->Sucesso) {
                             <?php if(isset($Descricao)){ ?>
                                 <p class="card-text text-truncate"><?= $Descricao; ?></p>
                             <?php } ?>
-                            <a href="#" class="btn btn-primary">ver +</a>
+                            <a class="btn btn-primary" onclick="window.location.href = './ver_instituicao.php?id=' + <?= $InstituicaoDestaque->idinstituicao ?>">ver +</a>
                             <div class="d-flex align-items-end flex-column align-bottom">
                             <i class="bi <?= (in_array($IDUserGlobal, $InstituicaoDestaque->curtidas) ? 'bi-heart-fill' : 'bi-heart'); ?>" 
                                     style="cursor: pointer;" 

@@ -44,4 +44,8 @@ class CurtidasController extends AbstractController {
     public function getAll(){
         return $this->Modal->getAll();
     }
+
+    public function getAllWithFilter($Filter = []){
+        return $this->Modal->getAllWithFilter($Filter);
+    }
 }
