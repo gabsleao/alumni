@@ -292,11 +292,11 @@ function thumbsDown(iduser, idcomentario, mudarCountUI = 1) {
   });
 }
 
-function notAllowedThumbs(document, like_id, up) {
-  var identifier = "thumbsUp_id-" + like_id;
+function notAllowedThumbs(document, idcomentario, up) {
+  var identifier = "thumbsUp_id-" + idcomentario;
 
   if(!up)
-    identifier = "thumbsDown_id-" + like_id;
+    identifier = "thumbsDown_id-" + idcomentario;
 
   shake(document.getElementById(identifier));
 
