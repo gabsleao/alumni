@@ -242,9 +242,8 @@ if(isset($Instituicao->informacoes) && is_string($Instituicao->informacoes)){
                         <div class="list-group-item d-flex align-items-start" style="border: none;">
                             <img src="assets/icons/guest_caret_down.svg" class="rounded-circle me-3" alt="Foto do usuário" width="50" height="50">
                             <div>
-                                <h6 class="mb-1"><?= $Comentario->nome; ?></h6>
+                                <h6 class="mb-1"><?= $Comentario->nome; ?></h6> <small class="text-muted"><?= $DataPost; ?></small>
                                 <p class="mb-1"><?= $Comentario->comentario; ?></p>
-                                <small class="text-muted"><?= $DataPost; ?></small>
                                 <small class="text-muted"><i><?= $DataModific; ?></i></small>
                             </div>
                         </div>
