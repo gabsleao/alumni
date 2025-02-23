@@ -85,6 +85,14 @@ switch ($_POST["operacao"]) {
         $AbstractController->Controller->editar();
         break;
 
+    case 'add_comentario':
+        $AbstractController->Controller->iduser = $_POST["iduser"];
+        $AbstractController->Controller->idinstituicao = $_POST["idinstituicao"];
+        $AbstractController->Controller->comentario = $_POST["comentario"];
+        
+        $AbstractController->Controller->criar();
+        break;
+
     default:
         break;
 }

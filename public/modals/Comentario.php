@@ -10,8 +10,8 @@ class Comentario {
     }
 
     public function criar(ComentarioController $Data){
-        $Sql = "INSERT INTO " . $this->Tabela . " (idcomentario , comentario , iduser_criador, idinstituicao, data_modificado, esta_deletado)
-                VALUES (:idcomentario, :comentario, :iduser_criador, :idinstituicao, :data_modificado, :esta_deletado)
+        $Sql = "INSERT INTO " . $this->Tabela . " (idcomentario , comentario , iduser_criador, idinstituicao, data_criado, data_modificado, esta_deletado)
+                VALUES (:idcomentario, :comentario, :iduser_criador, :idinstituicao, :data_criado, :data_modificado, :esta_deletado)
                 ON DUPLICATE KEY UPDATE 
                 data_modificado = :data_modificado,
                 esta_deletado = :esta_deletado";
@@ -22,11 +22,12 @@ class Comentario {
 		$Statement->bindValue(":comentario", $Data->comentario);
 		$Statement->bindValue(":iduser_criador", $Data->iduser);
         $Statement->bindValue(":idinstituicao", $Data->idinstituicao);
+        $Statement->bindValue(":data_criado", $Data->data_criado);
         $Statement->bindValue(":data_modificado", $Data->data_modificado);
         $Statement->bindValue(":esta_deletado", $Data->esta_deletado);
         $Statement->execute();
 
-        return Utils::sendResponse("CURTIDO", 200);
+        return Utils::sendResponse("COMENTARIO_CRIADO", 200);
     }
 
     public function editar(){
@@ -62,10 +63,8 @@ class Comentario {
             return json_encode(["Sucesso" => $Executado, "Resposta" => []]);
         }
 
-        foreach($Resultado as $Key => $Row){
-            $Resultado[$Key]['likes'] = $this->getLikes($Row['idcomentario']);
-            $Resultado[$Key]['dislikes'] = $this->getDislikes($Row['idcomentario']);
-        }
+        $Resultado['likes'] = $this->getLikes($Resultado['idcomentario']);
+        $Resultado['dislikes'] = $this->getLikes($Resultado['idcomentario']);
         
         return json_encode(["Sucesso" => $Executado, "Resposta" => $Resultado]);
     }
@@ -83,11 +82,42 @@ class Comentario {
         return json_encode(["Sucesso" => $Executado, "Resposta" => $Resultado]);
     }
 
+    public function getAllWithFilter($Filter = []){
+        if(empty($Filter))
+            return json_encode(["Sucesso" => false, "Resposta" => []]);
+
+        $Sql = "SELECT c.idcomentario, c.comentario, u.nome, c.data_criado, c.data_modificado FROM " . $this->Tabela . " c 
+                INNER JOIN usuarios u ON u.iduser = c.iduser_criador
+                AND c.esta_deletado = 0 
+                AND u.esta_deletado = 0";
+
+        if(isset($Filter['idinstituicao']))
+            $Sql .= ' AND c.idinstituicao = :idinstituicao';
+        
+        $Statement = $this->Database->prepare($Sql);
+        if(isset($Filter['idinstituicao']))
+            $Statement->bindValue(":idinstituicao", $Filter['idinstituicao']);
+
+        $Executado = $Statement->execute();
+		$Resultado = $Statement->fetchAll(PDO::FETCH_ASSOC);
+
+        if(!$Resultado){
+            return json_encode(["Sucesso" => $Executado, "Resposta" => []]);
+        }
+
+        foreach($Resultado as $Key => $Row){
+            $Resultado[$Key]['likes'] = $this->getLikes($Row['idcomentario']);
+            $Resultado[$Key]['dislikes'] = $this->getDislikes($Row['idcomentario']);
+        }
+        
+        return json_encode(["Sucesso" => $Executado, "Resposta" => $Resultado]);
+    }
+
     public function getLikes($IDComentario){
         if(empty($IDComentario))
             return 0;
 
-        $Sql = "SELECT COUNT(iduser) as likes FROM usuarios_comentarios_curtidas uc
+        $Sql = "SELECT COUNT(uc.iduser) as likes FROM usuarios_comentarios_curtidas uc
                 INNER JOIN usuarios u ON u.iduser = uc.iduser
                 AND u.esta_deletado = 0
                 AND uc.tipo = 'LIKE'
@@ -107,7 +137,7 @@ class Comentario {
         if(empty($IDComentario))
             return 0;
 
-        $Sql = "SELECT COUNT(iduser) as dislikes FROM usuarios_comentarios_curtidas uc
+        $Sql = "SELECT COUNT(uc.iduser) as dislikes FROM usuarios_comentarios_curtidas uc
                 INNER JOIN usuarios u ON u.iduser = uc.iduser
                 AND u.esta_deletado = 0
                 AND uc.tipo = 'DISLIKE'

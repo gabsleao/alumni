@@ -26,7 +26,7 @@ class ComentarioController extends AbstractController {
         }
 
         $this->data_criado = time();
-        $this->esta_deletado = 1;
+        $this->esta_deletado = 0;
         
         $this->Modal->criar($this);
     }
@@ -45,5 +45,9 @@ class ComentarioController extends AbstractController {
 
     public function getAll(){
         return $this->Modal->getAll();
+    }
+
+    public function getAllWithFilter($Filter = []){
+        return $this->Modal->getAllWithFilter($Filter);
     }
 }

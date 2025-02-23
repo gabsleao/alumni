@@ -198,10 +198,17 @@ if(isset($Instituicao->informacoes) && is_string($Instituicao->informacoes)){
                     </div>
 
                     <div class="modal-footer d-flex justify-content-center" id="footer">
-                        <button type="button" class="btn btn-primary me-4" id="btnAddComentario">Adicionar um Comentário</button>
-                        <button type="button" class="btn me-4 mr-4" id="btnEditarInstituicao" onclick="editarInstituicao(1);">Editar Instituição</button>
-                        <button type="button" class="btn btn-secondary me-4 mr-4" id="cancel_formViewInstituicao" hidden onclick="editarInstituicao(0);">Cancelar</button>
-                        <button type="submit" form="formViewInstituicao" class="btn btn-primary me-4 mr-4" id="submit_formViewInstituicao" hidden>Salvar</button>
+                        <?php if(isset($IDUserGlobal)){ ?>
+                            <button type="button" class="btn btn-primary me-4" id="btnAddComentario" data-bs-toggle="modal" data-bs-target="#modalAddComentario" 
+                                data-bs-idinstituicao="<?= $Instituicao->idinstituicao; ?>" 
+                                data-bs-nome_instituicao="<?= $Instituicao->nome; ?>"
+                                data-bs-iduser="<?= $IDUserGlobal; ?>"
+                                >Adicionar um Comentário
+                            </button>
+                            <button type="button" class="btn me-4 mr-4" id="btnEditarInstituicao" onclick="editarInstituicao(1);">Editar Instituição</button>
+                            <button type="button" class="btn btn-secondary me-4 mr-4" id="cancel_formViewInstituicao" hidden onclick="editarInstituicao(0);">Cancelar</button>
+                            <button type="submit" form="formViewInstituicao" class="btn btn-primary me-4 mr-4" id="submit_formViewInstituicao" hidden>Salvar</button>
+                        <?php } ?>
                     </div>
                 </form>
             </div>
@@ -212,21 +219,33 @@ if(isset($Instituicao->informacoes) && is_string($Instituicao->informacoes)){
         <div class="col-12">
             <?php
                 $ComentarioController = new AbstractController('ComentarioController');
-                $ComentarioController->Controller->idinstituicao = $_GET['id'];
-                $getComentariosRequest = json_decode($ComentarioController->get());
+                $getComentariosRequest = json_decode($ComentarioController->getAllWithFilter(['idinstituicao' => $Instituicao->idinstituicao]));
 
                 if (isset($getComentariosRequest->Sucesso) && $getComentariosRequest->Sucesso && !empty($getComentariosRequest->Resposta)){
             ?>
                 <div class="list-group scrollable-list">
                     <?php
                         foreach($getComentariosRequest->Resposta as $Comentario){
+                            $DataPost = $DataModific = '';
+                            if(isset($Comentario->data_criado)){
+                                $DateTime = new DateTime("now", new DateTimeZone(Utils::getTimezone())); 
+                                $DateTime->setTimestamp($Comentario->data_criado);
+                                $DataPost = 'Postado em ' . $DateTime->format('d/m/Y H:i:s');
+                            }
+
+                            if(isset($Comentario->data_modificado)){
+                                $DateTime = new DateTime("now", new DateTimeZone(Utils::getTimezone())); 
+                                $DateTime->setTimestamp($Comentario->data_modificado);
+                                $DataModific = 'Modificado em ' . $DateTime->format('d/m/Y H:i:s');
+                            } 
                     ?>
                         <div class="list-group-item d-flex align-items-start" style="border: none;">
                             <img src="assets/icons/guest_caret_down.svg" class="rounded-circle me-3" alt="Foto do usuário" width="50" height="50">
                             <div>
-                                <h6 class="mb-1">João Silva</h6>
-                                <p class="mb-1">Já fui aluno! Muito boa instituição.</p>
-                                <small class="text-muted">Postado há 2 horas</small>
+                                <h6 class="mb-1"><?= $Comentario->nome; ?></h6>
+                                <p class="mb-1"><?= $Comentario->comentario; ?></p>
+                                <small class="text-muted"><?= $DataPost; ?></small>
+                                <small class="text-muted"><i><?= $DataModific; ?></i></small>
                             </div>
                         </div>
                         <hr class="my-1"/>
