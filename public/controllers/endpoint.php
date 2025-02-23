@@ -93,6 +93,18 @@ switch ($_POST["operacao"]) {
         $AbstractController->Controller->criar();
         break;
 
+    case 'curtir_comentario':
+        $AbstractController->Controller->iduser = $_POST["iduser"];
+        $AbstractController->Controller->idcomentario = $_POST["idcomentario"];
+        $AbstractController->Controller->curtirComentario();
+        break;
+
+    case 'descurtir_comentario':
+        $AbstractController->Controller->iduser = $_POST["iduser"];
+        $AbstractController->Controller->idcomentario = $_POST["idcomentario"];
+        $AbstractController->Controller->descurtirComentario();
+        break;
+
     default:
         break;
 }

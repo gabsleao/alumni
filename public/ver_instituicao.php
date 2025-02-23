@@ -242,7 +242,18 @@ if(isset($Instituicao->informacoes) && is_string($Instituicao->informacoes)){
                         <div class="list-group-item d-flex align-items-start" style="border: none;">
                             <img src="assets/icons/guest_caret_down.svg" class="rounded-circle me-3" alt="Foto do usuário" width="50" height="50">
                             <div>
-                                <h6 class="mb-1"><?= $Comentario->nome; ?></h6> <small class="text-muted"><?= $DataPost; ?></small>
+                                <h6 class="mb-1"><?= $Comentario->nome; ?> - 
+                                    <i class="bi <?= (in_array($IDUserGlobal, $Comentario->likesIndex) ? 'bi-hand-thumbs-up-fill' : 'bi-hand-thumbs-up'); ?>" 
+                                        style="cursor: pointer;" 
+                                        onclick="<?= (isset($IDUserGlobal) ? "thumbsUp(" . $IDUserGlobal . ", " . $Comentario->idcomentario . ");" : "notAllowedThumbs(document, " . $Comentario->idcomentario . ", 1);"); ?>" 
+                                        id="thumbsUp_id-<?= $Comentario->idcomentario; ?>"><?= $Comentario->likes ?? 0; ?>
+                                    </i> - 
+                                    <i class="bi <?= (in_array($IDUserGlobal, $Comentario->dislikesIndex) ? 'bi-hand-thumbs-down-fill' : 'bi-hand-thumbs-down'); ?>" 
+                                        style="cursor: pointer;" 
+                                        onclick="<?= (isset($IDUserGlobal) ? "thumbsDown(" . $IDUserGlobal . ", " . $Comentario->idcomentario . ");" : "notAllowedThumbs(document, " . $Comentario->idcomentario . ", 0);"); ?>" 
+                                        id="thumbsDown_id-<?= $Comentario->idcomentario; ?>"><?= $Comentario->dislikes ?? 0; ?>
+                                    </i>
+                                </h6><small class="text-muted"><?= $DataPost; ?></small>
                                 <p class="mb-1"><?= $Comentario->comentario; ?></p>
                                 <small class="text-muted"><i><?= $DataModific; ?></i></small>
                             </div>

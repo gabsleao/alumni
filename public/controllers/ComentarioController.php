@@ -50,4 +50,32 @@ class ComentarioController extends AbstractController {
     public function getAllWithFilter($Filter = []){
         return $this->Modal->getAllWithFilter($Filter);
     }
+
+    public function curtirComentario(){
+        if(!isset($this->iduser) || $this->iduser == 0){
+            return;
+        }
+
+        if(!isset($this->idcomentario) || $this->idcomentario == 0){
+            return;
+        }
+
+        $this->data_criado = time();
+
+        return $this->Modal->curtirComentario($this);
+    }
+
+    public function descurtirComentario(){
+        if(!isset($this->iduser) || $this->iduser == 0){
+            return;
+        }
+
+        if(!isset($this->idcomentario) || $this->idcomentario == 0){
+            return;
+        }
+
+        $this->data_criado = time();
+
+        return $this->Modal->descurtirComentario($this);
+    }
 }

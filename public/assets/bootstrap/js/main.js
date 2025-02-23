@@ -174,3 +174,133 @@ function showToast(type) {
   
   toast.show();
 }
+
+function thumbsUp(iduser, idcomentario, mudarCountUI = 1) {
+  var PostData = {
+    "iduser": iduser,
+    "idcomentario": idcomentario,
+    "operacao": "curtir_comentario",
+    "controller": "ComentarioController",
+  };
+
+  $.ajax({
+      type: "POST",
+      url: "./public/controllers/endpoint.php",
+      data: PostData,
+      success: function(response) {
+          responseJson = JSON.parse(response);
+
+          if (responseJson.status == 200 && responseJson.mensagem == "CURTIDO") {
+              showToast("toastOperacaoConcluida");
+
+              //incrementa contagem de joinha na UI
+              if(mudarCountUI){
+                $('#thumbsUp_id-' + idcomentario).html(function(i, oldCount) {
+                    return ++oldCount;
+                });
+              }
+
+              //remove o thumbs down se tiver (count e fill)
+              $('#thumbsDown_id-' + idcomentario + '.bi-hand-thumbs-down-fill').html(function(i, oldCount) {
+                  return --oldCount;
+              });
+              $('#thumbsDown_id-' + idcomentario + '.bi-hand-thumbs-down-fill').addClass('bi-hand-thumbs-down');
+              $('#thumbsDown_id-' + idcomentario + '.bi-hand-thumbs-down-fill').removeClass('bi-hand-thumbs-down-fill');
+
+              //adiciona o fill da joinha
+              $('#thumbsUp_id-' + idcomentario).addClass('bi-hand-thumbs-up-fill');
+              $('#thumbsUp_id-' + idcomentario).removeClass('bi-hand-thumbs-up');
+              return;
+          }else if(responseJson.status == 200 && responseJson.mensagem == "NEUTRALIZADO"){
+            showToast("toastOperacaoConcluida");
+
+              if(mudarCountUI){
+                $('#thumbsUp_id-' + idcomentario).html(function(i, oldCount) {
+                    return --oldCount;
+                });
+
+              }
+
+              $('#thumbsUp_id-' + idcomentario).removeClass('bi-hand-thumbs-up-fill');
+              $('#thumbsUp_id-' + idcomentario).addClass('bi-hand-thumbs-up');
+
+              return;
+          }
+          showToast("toastWhoops");
+      },
+      error: function(response) {
+          showToast("toastWhoops");
+      }
+  });
+}
+
+function thumbsDown(iduser, idcomentario, mudarCountUI = 1) {
+  var PostData = {
+    "iduser": iduser,
+    "idcomentario": idcomentario,
+    "operacao": "descurtir_comentario",
+    "controller": "ComentarioController",
+  };
+
+  $.ajax({
+      type: "POST",
+      url: "./public/controllers/endpoint.php",
+      data: PostData,
+      success: function(response) {
+          responseJson = JSON.parse(response);
+
+          if (responseJson.status == 200 && responseJson.mensagem == "DESCURTIDO") {
+              showToast("toastOperacaoConcluida");
+
+              //incrementa joinha p baixo
+              if(mudarCountUI){
+                $('#thumbsDown_id-' + idcomentario).html(function(i, oldCount) {
+                    return ++oldCount;
+                });
+              }
+
+              //remove joinha se tiver (count e fill)
+              $('#thumbsUp_id-' + idcomentario + '.bi-hand-thumbs-up-fill').html(function(i, oldCount) {
+                return --oldCount;
+              });
+              $('#thumbsUp_id-' + idcomentario + '.bi-hand-thumbs-up-fill').addClass('bi-hand-thumbs-up');
+              $('#thumbsUp_id-' + idcomentario + '.bi-hand-thumbs-up-fill').removeClass('bi-hand-thumbs-up-fill');
+
+              $('#thumbsDown_id-' + idcomentario).addClass('bi-hand-thumbs-down-fill');
+              $('#thumbsDown_id-' + idcomentario).removeClass('bi-hand-thumbs-down');
+              return;
+          }else if(responseJson.status == 200 && responseJson.mensagem == "NEUTRALIZADO"){
+            showToast("toastOperacaoConcluida");
+
+              if(mudarCountUI){
+                $('#thumbsDown_id-' + idcomentario).html(function(i, oldCount) {
+                    return --oldCount;
+                });
+
+              }
+
+              $('#thumbsDown_id-' + idcomentario).removeClass('bi-hand-thumbs-down-fill');
+              $('#thumbsDown_id-' + idcomentario).addClass('bi-hand-thumbs-down');
+
+              return;
+          }
+          showToast("toastWhoops");
+      },
+      error: function(response) {
+          showToast("toastWhoops");
+      }
+  });
+}
+
+function notAllowedThumbs(document, like_id, up) {
+  var identifier = "thumbsUp_id-" + like_id;
+
+  if(!up)
+    identifier = "thumbsDown_id-" + like_id;
+
+  shake(document.getElementById(identifier));
+
+  var toastDocument = document.getElementById('toastNotAllowed');//select id of toast
+  var toast = new bootstrap.Toast(toastDocument);//inizialize it
+  toast.show();//show it
+}
