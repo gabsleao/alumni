@@ -210,57 +210,45 @@ if(isset($Instituicao->informacoes) && is_string($Instituicao->informacoes)){
 
     <div class="row mt-4">
         <div class="col-12">
-        <div class="list-group scrollable-list">
-            <div class="list-group-item d-flex align-items-start" style="border: none;">
-                <img src="assets/icons/guest_caret_down.svg" class="rounded-circle me-3" alt="Foto do usuário" width="50" height="50">
-                <div>
-                    <h6 class="mb-1">João Silva</h6>
-                    <p class="mb-1">Já fui aluno! Muito boa instituição.</p>
-                    <small class="text-muted">Postado há 2 horas</small>
-                </div>
-            </div>
-            <hr class="my-1"/>
-            
-            <div class="list-group-item d-flex align-items-start" style="border: none;">
-            <img src="assets/icons/guest_caret_down.svg" class="rounded-circle me-3" alt="Foto do usuário" width="50" height="50">
-                <div>
-                    <h6 class="mb-1">Maria Oliveira</h6>
-                    <p class="mb-1">Ótima escola! Gostei bastante do conteúdo.</p>
-                    <small class="text-muted">Postado há 5 horas</small>
-                </div>
-            </div>
-            <hr class="my-1"/>
+            <?php
+                $ComentarioController = new AbstractController('ComentarioController');
+                $ComentarioController->Controller->idinstituicao = $_GET['id'];
+                $getComentariosRequest = json_decode($ComentarioController->get());
 
-            <div class="list-group-item d-flex align-items-start" style="border: none;">
-            <img src="assets/icons/guest_caret_down.svg" class="rounded-circle me-3" alt="Foto do usuário" width="50" height="50">
-                <div>
-                    <h6 class="mb-1">Carlos Santos</h6>
-                    <p class="mb-1">Muito interessante, bons professores.</p>
-                    <small class="text-muted">Postado ontem</small>
+                if (isset($getComentariosRequest->Sucesso) && $getComentariosRequest->Sucesso && !empty($getComentariosRequest->Resposta)){
+            ?>
+                <div class="list-group scrollable-list">
+                    <?php
+                        foreach($getComentariosRequest->Resposta as $Comentario){
+                    ?>
+                        <div class="list-group-item d-flex align-items-start" style="border: none;">
+                            <img src="assets/icons/guest_caret_down.svg" class="rounded-circle me-3" alt="Foto do usuário" width="50" height="50">
+                            <div>
+                                <h6 class="mb-1">João Silva</h6>
+                                <p class="mb-1">Já fui aluno! Muito boa instituição.</p>
+                                <small class="text-muted">Postado há 2 horas</small>
+                            </div>
+                        </div>
+                        <hr class="my-1"/>
+                    <?php
+                        }
+                    ?>
                 </div>
-            </div>
-            <hr class="my-1"/>
-
-            <div class="list-group-item d-flex align-items-start" style="border: none;">
-            <img src="assets/icons/guest_caret_down.svg" class="rounded-circle me-3" alt="Foto do usuário" width="50" height="50">
-                <div>
-                    <h6 class="mb-1">Carlos Santos</h6>
-                    <p class="mb-1">Muito interessante, bons professores.</p>
-                    <small class="text-muted">Postado ontem</small>
-                </div>
-            </div>
-            <hr class="my-1"/>
-
-            <div class="list-group-item d-flex align-items-start" style="border: none;">
-            <img src="assets/icons/guest_caret_down.svg" class="rounded-circle me-3" alt="Foto do usuário" width="50" height="50">
-                <div>
-                    <h6 class="mb-1">Carlos Santos</h6>
-                    <p class="mb-1">Muito interessante, bons professores.</p>
-                    <small class="text-muted">Postado ontem</small>
-                </div>
-            </div>
-            <hr class="my-1"/>
-        </div>
+            <?php
+                }else{
+            ?>
+                    <div class="row mt-3 mb-5">
+                        <div class="col-4"></div>
+                        <div class="col-6">
+                            <p class="lead">
+                                Nenhum comentário para essa instituição... ainda!
+                            </p>
+                        </div>
+                        <div class="col-2"></div>
+                    </div>
+            <?php
+                }
+            ?>
         </div>
     </div>
 </div>
