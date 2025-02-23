@@ -13,7 +13,6 @@ class Instituicao {
         $Sql = "INSERT INTO " . $this->Tabela . " (nome, localizacao, data_criado, data_modificado, iduser_criador, tipo, esta_deletado, informacoes)
                 VALUES (:nome, :localizacao, :data_criado, :data_modificado, :iduser_criador, :tipo, :esta_deletado, :informacoes)";
         
-        Log::doLog(var_export($Data, 1), 'Data');
         $Statement = $this->Database->prepare($Sql);
         $Statement->bindValue(":nome", $Data->nome);
 		$Statement->bindValue(":localizacao", $Data->localizacao);
@@ -28,8 +27,27 @@ class Instituicao {
         return json_encode(["Sucesso" => true, "Resposta" => "Operação para salvar instituição enviada com sucesso!"]);
     }
 
-    public function editar(){
-        return json_encode(["Sucesso" => true, "Resposta" => "Operação para editar instituição ainda a ser implementada"]);
+    public function editar(InstituicaoController $Data){
+        $Sql = "UPDATE " . $this->Tabela . " SET 
+                nome = :nome,
+                localizacao = :localizacao,
+                data_modificado = :data_modificado,
+                tipo = :tipo,
+                esta_deletado = :esta_deletado,
+                informacoes = :informacoes
+                WHERE idinstituicao = :idinstituicao";
+        
+        $Statement = $this->Database->prepare($Sql);
+        $Statement->bindValue(":nome", $Data->nome);
+		$Statement->bindValue(":localizacao", $Data->localizacao);
+        $Statement->bindValue(":data_modificado", $Data->data_modificado);
+        $Statement->bindValue(":tipo", $Data->tipo);
+        $Statement->bindValue(":esta_deletado", $Data->esta_deletado);
+		$Statement->bindValue(":informacoes", json_encode($Data->informacoes));
+        $Statement->bindValue(":idinstituicao", $Data->idinstituicao);
+        $Statement->execute();
+
+        return json_encode(["Sucesso" => true, "Resposta" => "Operação para editar instituição enviada com sucesso!"]);
     }
 
     public function excluir(){

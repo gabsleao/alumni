@@ -47,7 +47,27 @@ class InstituicaoController extends AbstractController {
     }
 
     public function editar(){
-        return $this->Modal->editar();
+        if(!isset($this->nome) || strlen($this->nome) == 0){
+            return;
+        }
+
+        if(!isset($this->tipo) || strlen($this->tipo) == 0){
+            return;
+        }
+
+        if(!isset($this->localizacao) || $this->localizacao == 0){
+            return;
+        }
+
+        if(!isset($this->informacoes) || !is_array($this->informacoes)){
+            return;
+        }
+
+        $this->data_modificado = time();
+        $this->esta_deletado = 0;
+        
+        $this->Modal->editar($this);
+        return Utils::sendResponse("INSTITUICAO_EDITADA", 200);
     }
 
     public function excluir(){

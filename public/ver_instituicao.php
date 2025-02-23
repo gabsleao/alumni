@@ -24,14 +24,16 @@ if (isset($getInstituicaoRequest->Sucesso) && !$getInstituicaoRequest->Sucesso |
 $Instituicao = $getInstituicaoRequest->Resposta;
 
 if(isset($Instituicao->informacoes) && is_string($Instituicao->informacoes)){
-    $Endereço = json_decode($Instituicao->informacoes)->endereco ?? 'não encontrado ):';
-    $Cidade = json_decode($Instituicao->informacoes)->cidade ?? 'não encontrada ):';
-    $Site = json_decode($Instituicao->informacoes)->site ?? 'não encontrado ):';
-    $Telefone = json_decode($Instituicao->informacoes)->telefone ?? 'não encontrado ):';
-    $Inclusiva = json_decode($Instituicao->informacoes)->instituicao_inclusiva ?? false;
-    $Presencial = json_decode($Instituicao->informacoes)->modalidade_presencial ?? false;
-    $Remoto = json_decode($Instituicao->informacoes)->modalidade_remoto ?? false;
-    $Descrição = json_decode($Instituicao->informacoes)->descricao ?? 'não encontrado ):';
+    $InfoDecoded = json_decode($Instituicao->informacoes);
+    
+    $Endereço = $InfoDecoded->endereco ?? 'não encontrado ):';
+    $Cidade = $InfoDecoded->cidade ?? 'não encontrada ):';
+    $Site = $InfoDecoded->site ?? 'não encontrado ):';
+    $Telefone = $InfoDecoded->telefone ?? 'não encontrado ):';
+    $Inclusiva = filter_var($InfoDecoded->instituicao_inclusiva, FILTER_VALIDATE_BOOLEAN) ?? false;
+    $Presencial = filter_var($InfoDecoded->modalidade_presencial, FILTER_VALIDATE_BOOLEAN) ?? false;
+    $Remoto = filter_var($InfoDecoded->modalidade_remoto, FILTER_VALIDATE_BOOLEAN) ?? false;
+    $Descrição = $InfoDecoded->descricao ?? 'não encontrado ):';
 }
 
 ?>
@@ -47,7 +49,8 @@ if(isset($Instituicao->informacoes) && is_string($Instituicao->informacoes)){
     <div class="row">
         <div class="col-12">
             <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-light rounded">
-                <form class="row g-3 needs-validation mt-3 mb-3 me-2 form-switch" novalidate id="formAdicionarInstituicao">
+                <form class="row g-3 needs-validation mt-3 mb-3 me-2 form-switch" novalidate id="formViewInstituicao">
+                    <input type="hidden" name="idinstituicao" id="idinstituicao" value="<?= $Instituicao->idinstituicao; ?>">
                     <div class="col-md-9">
                         <label for="nome" class="form-label">Nome da Instituição</label>
                         <i class="ms-4 bi <?= (in_array($IDUserGlobal, $Instituicao->curtidas) ? 'bi-heart-fill' : 'bi-heart'); ?>" 
@@ -174,31 +177,31 @@ if(isset($Instituicao->informacoes) && is_string($Instituicao->informacoes)){
                     </div>
                     <div class="col-md-4">
                         <label class="form-check-label" for="instituicao_inclusiva">Instituição Inclusiva</label><button class="btn btn-link" type="button" data-bs-toggle="modal" data-bs-target="#modalInformativoInclusao"><img src="assets/icons/informativo.svg" width="20" height="20"></button>
-                        <br><input class="form-check-input ms-5" type="checkbox" value="1" id="instituicao_inclusiva" <?= ($Inclusiva ? 'checked' : ''); ?> disabled>
+                        <br><input class="form-check-input ms-5" type="checkbox" value="1" id="instituicao_inclusiva" <?= (isset($Inclusiva) && $Inclusiva ? 'checked' : ''); ?> disabled>
                     </div>
 
                     <div class="col-md-4">
                         <li class="list-unstyled">
-                            <input class="form-check-input" type="checkbox" value="1" id="checkbox_modalidade_presencial" <?= ($Presencial ? 'checked' : ''); ?> disabled>
+                            <input class="form-check-input" type="checkbox" value="1" id="checkbox_modalidade_presencial" <?= (isset($Presencial) && $Presencial ? 'checked' : ''); ?> disabled>
                             <label class="form-check-label" for="checkbox_modalidade_presencial">Presencial</label>
                         </li>
                         <li class="list-unstyled">
-                            <input class="form-check-input" type="checkbox" value="1" id="checkbox_modalidade_remoto" <?= ($Remoto ? 'checked' : ''); ?> disabled>
+                            <input class="form-check-input" type="checkbox" value="1" id="checkbox_modalidade_remoto" <?= (isset($Remoto) && $Remoto ? 'checked' : ''); ?> disabled>
                             <label class="form-check-label" for="checkbox_modalidade_remoto">Remoto (EaD)</label>
                         </li>
                     </div>
                     <div class="col-md-12">
                         <div class="form-floating">
-                            <textarea class="form-control" placeholder="Deixe uma descrição da instituição" id="descricao" minlength="10" maxlength="250" required disabled style="height: 215px;"><?= $Descrição; ?></textarea>
+                            <textarea class="form-control" placeholder="Deixe uma descrição da instituição" id="descricao" minlength="10" required disabled style="height: 215px;"><?= $Descrição; ?></textarea>
                             <label for="descricao">Descrição da instituição</label>
                         </div>
                     </div>
 
-                    <div class="modal-footer d-flex justify-content-center">
-                        <button class="btn btn-primary me-4">Adicionar um Comentário</button>
-                        <button form="formEditarInstituicao" class="btn me-4 mr-4" id="submit_formEditarInstituicao">Editar Instituição</button>
-                        <button type="button" class="btn btn-secondary me-4 mr-4" data-bs-dismiss="modal" hidden>Cancelar</button>
-                        <button type="submit" form="formAdicionarInstituicao" class="btn btn-primary me-4 mr-4" id="submit_formAdicionarInstituicao" hidden>Salvar</button>
+                    <div class="modal-footer d-flex justify-content-center" id="footer">
+                        <button type="button" class="btn btn-primary me-4" id="btnAddComentario">Adicionar um Comentário</button>
+                        <button type="button" class="btn me-4 mr-4" id="btnEditarInstituicao" onclick="editarInstituicao(1);">Editar Instituição</button>
+                        <button type="button" class="btn btn-secondary me-4 mr-4" id="cancel_formViewInstituicao" hidden onclick="editarInstituicao(0);">Cancelar</button>
+                        <button type="submit" form="formViewInstituicao" class="btn btn-primary me-4 mr-4" id="submit_formViewInstituicao" hidden>Salvar</button>
                     </div>
                 </form>
             </div>
@@ -264,11 +267,11 @@ if(isset($Instituicao->informacoes) && is_string($Instituicao->informacoes)){
 
 <script>
     //no evento do form submit
-    document.getElementById('formAdicionarInstituicao').addEventListener('submit', validaformAdicionarInstituicao);
+    document.getElementById('formViewInstituicao').addEventListener('submit', validaformViewInstituicao);
 
-    function validaformAdicionarInstituicao() {
+    function validaformViewInstituicao() {
         //pega o form pra validar
-        const forms = document.querySelectorAll('#formAdicionarInstituicao')
+        const forms = document.querySelectorAll('#formViewInstituicao')
 
         //verifica todos (em caso de multiplos forms)
         Array.from(forms).forEach(form => {
@@ -278,15 +281,16 @@ if(isset($Instituicao->informacoes) && is_string($Instituicao->informacoes)){
                 event.stopPropagation();
             } else {
                 event.preventDefault();
-                adicionarInstituicao(form);
+                editarInstituicaoSave(form);
             }
 
-            form.classList.add('was-validated')
-        })
+            form.classList.add('was-validated');
+        });
     }
 
-    function adicionarInstituicao(Data) {
+    function editarInstituicaoSave(Data) {
         var PostData = {
+            "idinstituicao": Data.idinstituicao.value,
             "nome": Data.nome.value,
             "profile_img_url": Data.profile_img_url.value,
             "profile_img_filename": Data.profile_img_filename.value,
@@ -300,7 +304,7 @@ if(isset($Instituicao->informacoes) && is_string($Instituicao->informacoes)){
             "instituicao_inclusiva": $('#instituicao_inclusiva').is(":checked"),
             "modalidade_presencial": $('#checkbox_modalidade_presencial').is(":checked"),
             "modalidade_remoto": $('#checkbox_modalidade_remoto').is(":checked"),
-            "operacao": "adicionar_instituicao",
+            "operacao": "editar_instituicao",
             "controller": "InstituicaoController",
         };
 
@@ -309,30 +313,14 @@ if(isset($Instituicao->informacoes) && is_string($Instituicao->informacoes)){
             url: "./public/controllers/endpoint.php",
             data: PostData,
             success: function(response) {
-                console.log(response);
                 responseJson = JSON.parse(response);
-                if (responseJson.status == 405) {
-                    switch (responseJson.mensagem) {
-                        case "INSTITUICAO_JA_EXISTENTE":
-                            showToast("toastInstituicaoJaExiste");
-                            shake(document.getElementById("submit_formAdicionarInstituicao"));
-                            $('#formAdicionarInstituicao').find('form').removeClass('was-validated');
-                            return;
-                            break;
 
-                        default:
-                            showToast("toastWhoops");
-                            return;
-                            break;
-                    }
-                }
-
-                if (responseJson.status == 200 && responseJson.mensagem == "INSTITUICAO_CRIADA") {
+                if (responseJson.status == 200 && responseJson.mensagem == "INSTITUICAO_EDITADA") {
                     showToast("toastOperacaoConcluida");
                     setTimeout(function() {
-                        $('#formAdicionarInstituicao').trigger('reset');
-                        $('#formAdicionarInstituicao').removeClass('was-validated');
-                        window.location.href = "./adicionar_instituicoes.php";
+                        $('#formViewInstituicao').trigger('reset');
+                        $('#formViewInstituicao').removeClass('was-validated');
+                        window.location.href = "./ver_instituicao.php?id=" + Data.idinstituicao.value;
                     }, 1500);
                     return;
                 }
@@ -342,6 +330,17 @@ if(isset($Instituicao->informacoes) && is_string($Instituicao->informacoes)){
             error: function(response) {
                 showToast("toastWhoops");
             }
-        });
+        });     
+    }
+
+    function editarInstituicao(editar){
+        if(editar){
+            $("#formViewInstituicao :input").prop("disabled", false);
+
+            $("#submit_formViewInstituicao").prop("hidden", false);
+            $("#cancel_formViewInstituicao").prop("hidden", false);
+        }else{
+            window.location.href = "./ver_instituicao.php?id=" + $('#idinstituicao').val();
+        }
     }
 </script>
