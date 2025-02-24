@@ -111,6 +111,15 @@ class Comentario {
             $Resultado[$Key]['likesIndex'] = $this->getLikesIndex($Row['idcomentario']);
             $Resultado[$Key]['dislikesIndex'] = $this->getDislikesIndex($Row['idcomentario']);
         }
+
+        //ordenar por quem tem mais like
+        usort($Resultado, function($A, $B){
+            if ($A['likes'] == $B['likes']) {
+                return 0;
+            }
+
+            return ($A['likes'] > $B['likes']) ? -1 : 1;
+        });
         
         return json_encode(["Sucesso" => $Executado, "Resposta" => $Resultado]);
     }
