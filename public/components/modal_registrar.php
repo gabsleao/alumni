@@ -9,7 +9,7 @@
                 <form class="row g-3 needs-validation" novalidate id="formRegistrar">
                     <input type="hidden" id="tipo" value="USER">
                     <div class="col-md-12 align-self-end">
-                        <label for="nome" class="form-label">Nome</label>
+                        <label for="nome" class="form-label">Nome</label><span style="color: red;">*</span>
                         <input type="text" class="form-control" id="nome" required minlength="3" maxlength="50">
                         <div class="valid-feedback">
                             Excelente!
@@ -32,7 +32,7 @@
                         </div>
                     </div> -->
                     <div class="col-md-6">
-                        <label for="email" class="form-label">Email</label>
+                        <label for="email" class="form-label">Email</label><span style="color: red;">*</span>
                         <input type="email" class="form-control" id="email" placeholder="...@dominio.com" required minlength="3" maxlength="50">
                         <div class="valid-feedback">
                             Excelente!
@@ -42,9 +42,9 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <label for="confirmar_email" class="form-label">Confirmar Email</label>
+                        <label for="confirmar_email" class="form-label">Confirmar Email</label><span style="color: red;">*</span>
                         <input type="email" class="form-control" id="confirmar_email" placeholder="...@dominio.com" required minlength="3" maxlength="50">
-                        <div class="valid-feedback">
+                        <div class="valid-feedback" id="feedback_email_ok">
                             Excelente!
                         </div>
                         <div class="invalid-feedback" id="feedback_email">
@@ -52,7 +52,7 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <label for="senha" class="form-label">Senha</label>
+                        <label for="senha" class="form-label">Senha</label><span style="color: red;">*</span>
                         <input type="password" class="form-control" id="senha" placeholder="**********" required minlength="8" maxlength="250">
                         <div class="valid-feedback">
                             Excelente!
@@ -62,7 +62,7 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <label for="confirmar_senha" class="form-label">Confirmar Senha</label>
+                        <label for="confirmar_senha" class="form-label">Confirmar Senha</label><span style="color: red;">*</span>
                         <input type="password" class="form-control" id="confirmar_senha" placeholder="**********" required minlength="8" maxlength="250">
                         <div class="valid-feedback">
                             Excelente!
@@ -72,7 +72,7 @@
                         </div>
                     </div>
                     <div class="col-md-5">
-                        <label for="estado" class="form-label">Estado</label>
+                        <label for="estado" class="form-label">Estado</label><span style="color: red;">*</span>
                         <select id="estado" class="form-select" required minlength="4">
                             <option value="AC">Acre</option>
                             <option value="AL">Alagoas</option>
@@ -111,7 +111,7 @@
                         </div>
                     </div>
                     <div class="col-md-7">
-                        <label for="cidade" class="form-label">Cidade</label>
+                        <label for="cidade" class="form-label">Cidade</label><span style="color: red;">*</span>
                         <input type="text" class="form-control" id="cidade" required minlength="3" maxlength="250">
                         <div class="valid-feedback">
                             Excelente!
@@ -146,6 +146,17 @@
                 showToast("toastWhoops");
                 event.preventDefault();
                 event.stopPropagation();
+
+                console.log(form.email.value);
+                console.log(form.confirmar_email.value);
+                //validação adicional...
+                if (form.email.value != form.confirmar_email.value) {
+                    $("#feedback_email").addClass("d-block");
+                    $("#feedback_email_ok").hide();
+                    $("#feedback_email_ok").removeClass("valid-feedback");
+                    podeRegistrar = false;
+                }
+
             } else {
                 var podeRegistrar = true;
 
