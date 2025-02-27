@@ -98,27 +98,27 @@ $CurtidasUser = json_decode($CurtidasController->getAllWithFilter(['iduser' => $
                 </p>
                 <p class="mb-1" style="font-size: .77rem;">Escolas</p>
                 <div class="progress rounded" style="height: 5px;">
-                  <div class="progress-bar" role="progressbar" style="width: <?= ($CurtidasInteresse['escola'] / $TotalCurtidas) * 100 ?>%" aria-valuenow="<?= $CurtidasInteresse['escola']; ?>"
+                  <div class="progress-bar" role="progressbar" style="width: <?= $TotalCurtidas > 0 ? ($CurtidasInteresse['escola'] / $TotalCurtidas) * 100 : 0?>%" aria-valuenow="<?= $CurtidasInteresse['escola']; ?>"
                     aria-valuemin="0" aria-valuemax="<?= $TotalCurtidas ?>"></div>
                 </div>
                 <p class="mt-4 mb-1" style="font-size: .77rem;">Faculdades</p>
                 <div class="progress rounded" style="height: 5px;">
-                  <div class="progress-bar" role="progressbar" style="width: <?= ($CurtidasInteresse['faculdade'] / $TotalCurtidas) * 100 ?>%" aria-valuenow="<?= $CurtidasInteresse['faculdade']; ?>"
+                  <div class="progress-bar" role="progressbar" style="width: <?= $TotalCurtidas > 0 ? ($CurtidasInteresse['faculdade'] / $TotalCurtidas) * 100 : 0 ?>%" aria-valuenow="<?= $CurtidasInteresse['faculdade']; ?>"
                     aria-valuemin="0" aria-valuemax="<?= $TotalCurtidas ?>"></div>
                 </div>
                 <p class="mt-4 mb-1" style="font-size: .77rem;">Idiomas</p>
                 <div class="progress rounded" style="height: 5px;">
-                  <div class="progress-bar" role="progressbar" style="width: <?= ($CurtidasInteresse['idioma'] / $TotalCurtidas) * 100 ?>%" aria-valuenow="<?= $CurtidasInteresse['idioma']; ?>"
+                  <div class="progress-bar" role="progressbar" style="width: <?= $TotalCurtidas > 0 ?($CurtidasInteresse['idioma'] / $TotalCurtidas) * 100 : 0 ?>%" aria-valuenow="<?= $CurtidasInteresse['idioma']; ?>"
                     aria-valuemin="0" aria-valuemax="<?= $TotalCurtidas ?>"></div>
                 </div>
                 <p class="mt-4 mb-1" style="font-size: .77rem;">Profissionalizantes</p>
                 <div class="progress rounded" style="height: 5px;">
-                  <div class="progress-bar" role="progressbar" style="width: <?= ($CurtidasInteresse['profissionalizante'] / $TotalCurtidas) * 100 ?>%" aria-valuenow="<?= $CurtidasInteresse['profissionalizante']; ?>"
+                  <div class="progress-bar" role="progressbar" style="width: <?= $TotalCurtidas > 0 ?($CurtidasInteresse['profissionalizante'] / $TotalCurtidas) * 100 : 0 ?>%" aria-valuenow="<?= $CurtidasInteresse['profissionalizante']; ?>"
                     aria-valuemin="0" aria-valuemax="<?= $TotalCurtidas ?>"></div>
                 </div>
                 <p class="mt-4 mb-1" style="font-size: .77rem;">Outros</p>
                 <div class="progress rounded mb-2" style="height: 5px;">
-                  <div class="progress-bar" role="progressbar" style="width: <?= ($CurtidasInteresse['outros'] / $TotalCurtidas) * 100 ?>%" aria-valuenow="<?= $CurtidasInteresse['outros']; ?>"
+                  <div class="progress-bar" role="progressbar" style="width: <?= $TotalCurtidas > 0 ?($CurtidasInteresse['outros'] / $TotalCurtidas) * 100 : 0 ?>%" aria-valuenow="<?= $CurtidasInteresse['outros']; ?>"
                     aria-valuemin="0" aria-valuemax="<?= $TotalCurtidas ?>"></div>
                 </div>
               </div>

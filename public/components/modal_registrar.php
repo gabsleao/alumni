@@ -201,6 +201,7 @@
                             return;
                             break;
 
+                        case "USUARIO_NAO_CRIADO":
                         default:
                             showToast("toastWhoops");
                             $('#modalRegistrar').find('form').removeClass('was-validated');

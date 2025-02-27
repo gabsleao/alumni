@@ -52,8 +52,13 @@ class UserController extends AbstractController {
         $this->data_criado = time();
         $this->esta_deletado = 0;
         
-        $this->Modal->criar($this);
-        Utils::sendResponse("USUARIO_CRIADO", 200);
+        $Sucesso = $this->Modal->criar($this);
+
+        if($Sucesso){
+            Utils::sendResponse("USUARIO_CRIADO", 200);
+        }
+    
+        Utils::sendResponse("USUARIO_NAO_CRIADO", 405);
     }
 
     public function editar(){

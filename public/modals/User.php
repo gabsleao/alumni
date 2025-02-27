@@ -21,9 +21,9 @@ class User {
         $Statement->bindValue(":tipo", $Data->tipo);
 		$Statement->bindValue(":esta_deletado", $Data->esta_deletado);
         $Statement->bindValue(":informacoes", json_encode($Data->informacoes));
-        $Statement->execute();
+        $Resultado = $Statement->execute();
 
-        return json_encode(["Sucesso" => true, "Resposta" => "Operação para salvar curso enviada com sucesso!"]);
+        return $Resultado;
     }
 
     public function editar(){
