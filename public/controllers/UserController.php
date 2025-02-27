@@ -45,13 +45,6 @@ class UserController extends AbstractController {
         if($this->existeUsuario()){
             Utils::sendResponse("USUARIO_JA_EXISTENTE", 405);
         }
-        
-        if(isset($this->informacoes["profile_img_filename"]) && strlen($this->informacoes["profile_img_filename"]) > 0){
-            $this->informacoes["profile_img_filename"] = basename(str_replace( "\\", '/', $this->informacoes["profile_img_filename"]));
-            if(isset($this->informacoes["profile_img_url"]) && strlen($this->informacoes["profile_img_url"]) > 0){
-                $this->uploadProfileImage();
-            }
-        }
 
         $this->email = Seguranca::encryptString($this->email);
         $this->senha = Seguranca::encryptString($this->senha);
