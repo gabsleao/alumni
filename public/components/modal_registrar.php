@@ -18,19 +18,6 @@
                             Seu nome precisa ter entre 3 e 50 caracteres.
                         </div>
                     </div>
-                    <!-- <div class="col-md-3">
-                        <label for="profile_img_filename" class="form-label">
-                            <img src="assets/icons/user_focus.svg" class="rounded-circle" style="cursor: pointer;" width="80" height="80" id="preview-profile_img_filename" />
-                        </label>
-                        <input type="hidden" class="form-control" id="profile_img_url">
-                        <input type="file" class="form-control" id="profile_img_filename" accept="image/*" style="display: none;">
-                        <div class="valid-feedback">
-                            Excelente!
-                        </div>
-                        <div class="invalid-feedback">
-                            Utilize uma imagem válida.
-                        </div>
-                    </div> -->
                     <div class="col-md-6">
                         <label for="email" class="form-label">Email</label><span style="color: red;">*</span>
                         <input type="email" class="form-control" id="email" placeholder="...@dominio.com" required minlength="3" maxlength="50">
