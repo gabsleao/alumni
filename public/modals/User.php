@@ -26,8 +26,27 @@ class User {
         return $Resultado;
     }
 
-    public function editar(){
-        return json_encode(["Sucesso" => true, "Resposta" => "Operação para editar curso ainda a ser implementada"]);
+    public function editar(UserController $Data){
+        $Sql = "UPDATE " . $this->Tabela . " SET 
+                nome = :nome,
+                localizacao = :localizacao,
+                data_modificado = :data_modificado,
+                tipo = :tipo,
+                esta_deletado = :esta_deletado,
+                informacoes = :informacoes
+                WHERE iduser = :iduser";
+        
+        $Statement = $this->Database->prepare($Sql);
+        $Statement->bindValue(":nome", $Data->nome);
+		$Statement->bindValue(":localizacao", $Data->localizacao);
+        $Statement->bindValue(":data_modificado", $Data->data_modificado);
+        $Statement->bindValue(":tipo", $Data->tipo);
+        $Statement->bindValue(":esta_deletado", $Data->esta_deletado);
+		$Statement->bindValue(":informacoes", json_encode($Data->informacoes));
+        $Statement->bindValue(":iduser", $Data->iduser);
+        $Resultado = $Statement->execute();
+
+        return $Resultado;
     }
 
     public function excluir(){

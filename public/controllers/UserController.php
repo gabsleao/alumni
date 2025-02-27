@@ -55,14 +55,38 @@ class UserController extends AbstractController {
         $Sucesso = $this->Modal->criar($this);
 
         if($Sucesso){
-            Utils::sendResponse("USUARIO_CRIADO", 200);
+            return Utils::sendResponse("USUARIO_CRIADO", 200);
         }
     
-        Utils::sendResponse("USUARIO_NAO_CRIADO", 405);
+        return Utils::sendResponse("USUARIO_NAO_CRIADO", 405);
+        
     }
 
     public function editar(){
-        $this->Modal->editar();
+        if(!isset($this->nome) || strlen($this->nome) == 0){
+            return;
+        }
+
+        if(!isset($this->tipo) || strlen($this->tipo) == 0){
+            return;
+        }
+
+        if(!isset($this->localizacao) || $this->localizacao == 0){
+            return;
+        }
+
+        if(!isset($this->informacoes) || !is_array($this->informacoes)){
+            return;
+        }
+
+        $this->data_modificado = time();
+        $this->esta_deletado = 0;
+        
+        $Sucesso = $this->Modal->editar($this);
+        if($Sucesso)
+            return Utils::sendResponse("USUARIO_EDITADO", 200);
+
+        return Utils::sendResponse("USUARIO_NAO_EDITADO", 405);
     }
 
     public function excluir(){
