@@ -188,8 +188,6 @@
     function registrarUsuario(Data) {
         var PostData = {
             "nome": Data.nome.value,
-            // "profile_img_url" : Data.profile_img_url.value,
-            // "profile_img_filename": Data.profile_img_filename.value,
             "email": Data.email.value,
             "confirmar_email": Data.confirmar_email.value,
             "senha": Data.senha.value,
@@ -241,23 +239,4 @@
             }
         });
     }
-
-    //preview imagem de perfil
-    //https://developer.mozilla.org/en-US/docs/Web/API/File_API/Using_files_from_web_applications
-    // $(function() {
-    //     $('#profile_img_filename').change(function() {
-    //         var input = this;
-    //         var url = $(this).val();
-    //         var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
-    //         if (input.files && input.files[0]) {
-    //             var reader = new FileReader();
-
-    //             reader.onload = function(e) {
-    //                 $('#preview-profile_img_filename').attr('src', e.target.result);
-    //                 $('#profile_img_url').attr('value', URL.createObjectURL(input.files[0]));
-    //             }
-    //             reader.readAsDataURL(input.files[0]);
-    //         }
-    //     });
-    // });
 </script>
